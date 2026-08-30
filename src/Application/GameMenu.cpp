@@ -20,6 +20,7 @@
 
 #include "Library/Platform/Interface/PlatformEnums.h"
 #include "Io/InputEnums.h"
+#include "Io/InputActionContexts.h"
 #include "Io/KeyboardInputHandler.h"
 
 #include "GUI/GUIButton.h"
@@ -187,16 +188,18 @@ void Menu::EventLoop() {
                 if (currently_selected_action_for_binding != INPUT_ACTION_INVALID) {
                     pAudioPlayer->playUISound(SOUND_error);
                 } else {
-                    currently_selected_action_for_binding = (InputAction)param;
-                    if (KeyboardPageNum != 1)
-                        currently_selected_action_for_binding = (InputAction)(param + 14);
+                    currently_selected_action_for_binding = inputActionForBindingRow(KeyboardPageNum, param);
+                    if (currently_selected_action_for_binding == INPUT_ACTION_INVALID) {
+                        pAudioPlayer->playUISound(SOUND_error);
+                        continue;
+                    }
                     keyboardInputHandler->StartTextInput(TextInputType::Text, 1, pGUIWindow_CurrentMenu.get());
                 }
                 continue;
             }
 
             case UIMSG_ResetKeyMapping: {
-                curr_key_map = keyboardActionMapping->defaultKeybindings(KEYBINDINGS_CONFIGURABLE);
+                curr_key_map = keyboardActionMapping->defaultGamepadKeybindings(KEYBINDINGS_ALL);
                 keyboardActionMapping->applyKeybindings(curr_key_map);
                 key_map_conflicted.clear();
                 pAudioPlayer->playUISound(SOUND_chimes);
@@ -204,10 +207,14 @@ void Menu::EventLoop() {
             }
 
             case UIMSG_SelectKeyPage1:
-                KeyboardPageNum = 1;
+                KeyboardPageNum--;
+                if (KeyboardPageNum < 1)
+                    KeyboardPageNum = static_cast<int>(kInputActionPages.size());
                 continue;
             case UIMSG_SelectKeyPage2:
-                KeyboardPageNum = 2;
+                KeyboardPageNum++;
+                if (KeyboardPageNum > static_cast<int>(kInputActionPages.size()))
+                    KeyboardPageNum = 1;
                 continue;
 
             case UIMSG_OpenVideoOptions: {
