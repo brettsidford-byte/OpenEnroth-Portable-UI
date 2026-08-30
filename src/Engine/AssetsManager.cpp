@@ -95,6 +95,19 @@ GraphicsImage *AssetsManager::getImage_ColorKey(std::string_view name, Color col
     return i->second;
 }
 
+GraphicsImage *AssetsManager::getImage_Png(std::string_view path) {
+    std::string filename = ascii::toLower(path);
+
+    auto i = images.find(filename);
+    if (i == images.end()) {
+        auto image = GraphicsImage::Create(std::make_unique<Png_Dfs_Loader>(filename));
+        images[filename] = image;
+        return image;
+    }
+
+    return i->second;
+}
+
 
 
 GraphicsImage *AssetsManager::getImage_Solid(std::string_view name) {
@@ -205,4 +218,3 @@ bool AssetsManager::releaseSprite(std::string_view name) {
     sprites.erase(filename);
     return true;
 }
-

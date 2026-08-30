@@ -21,6 +21,7 @@ class AssetsManager {
     bool releaseBitmap(std::string_view name);
 
     GraphicsImage *getImage_ColorKey(std::string_view name, Color colorkey = colorTable.TealMask);
+    GraphicsImage *getImage_Png(std::string_view path);
     GraphicsImage *getImage_Paletted(std::string_view name);
     GraphicsImage *getImage_Solid(std::string_view name);
     GraphicsImage *getImage_Alpha(std::string_view name);
