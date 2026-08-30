@@ -45,6 +45,17 @@ static Palette MakePaletteAlpha(const Palette &palette) {
     return result;
 }
 
+bool Png_Dfs_Loader::Load(RgbaImage *rgbaImage) {
+    Blob data = dfs->read(resource_name);
+    if (!data) {
+        MM_WARNING("Unable to load PNG resource {}", resource_name);
+        return false;
+    }
+
+    *rgbaImage = png::decode(data);
+    return true;
+}
+
 static Palette MakePaletteColorKey(const Palette &palette, Color key) {
     Palette result = palette;
 
@@ -295,4 +306,3 @@ bool Sprites_LOD_Loader::Load(RgbaImage *rgbaImage) {
 
     return true;
 }
-

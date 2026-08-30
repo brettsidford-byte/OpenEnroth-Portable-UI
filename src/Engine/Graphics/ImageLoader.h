@@ -21,6 +21,15 @@ class ImageLoader {
     std::string resource_name;
 };
 
+class Png_Dfs_Loader : public ImageLoader {
+ public:
+    explicit inline Png_Dfs_Loader(std::string_view filename) {
+        this->resource_name = filename;
+    }
+
+    virtual bool Load(RgbaImage *rgbaImage) override;
+};
+
 class Paletted_Img_Loader : public ImageLoader {
  public:
     inline Paletted_Img_Loader(LodTextureCache *lod, std::string_view filename) {
