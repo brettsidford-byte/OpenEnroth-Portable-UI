@@ -17,10 +17,10 @@ GUIWindow_MainMenu::GUIWindow_MainMenu() :
     GUIWindow(WINDOW_MainMenu, {0, 0}, render->GetRenderDimensions()) {
     main_menu_background = assets->getImage_PCXFromIconsLOD("title.pcx");
 
-    ui_mainmenu_new = assets->getImage_ColorKey("title_new");
-    ui_mainmenu_load = assets->getImage_ColorKey("title_load");
-    ui_mainmenu_credits = assets->getImage_ColorKey("title_cred");
-    ui_mainmenu_exit = assets->getImage_ColorKey("title_exit");
+    ui_mainmenu_new = assets->getImage_Png("images/portable_ui/portable_title_new.png");
+    ui_mainmenu_load = assets->getImage_Png("images/portable_ui/portable_title_load.png");
+    ui_mainmenu_credits = assets->getImage_Png("images/portable_ui/portable_title_credits.png");
+    ui_mainmenu_exit = assets->getImage_Png("images/portable_ui/portable_title_exit.png");
 
     pBtnNew = CreateButton("MainMenu_NewGame", {495, 172}, ui_mainmenu_new->size(), BUTTON_TYPE_NORMAL, 0,
                            UIMSG_MainMenu_ShowPartyCreationWnd, 0, INPUT_ACTION_NEW_GAME, "", {ui_mainmenu_new});
@@ -42,6 +42,10 @@ GUIWindow_MainMenu::~GUIWindow_MainMenu() {
 
 void GUIWindow_MainMenu::Update() {
     render->DrawQuad2D(main_menu_background, {0, 0});
+    render->DrawQuad2D(ui_mainmenu_new, {495, 172});
+    render->DrawQuad2D(ui_mainmenu_load, {495, 227});
+    render->DrawQuad2D(ui_mainmenu_credits, {495, 282});
+    render->DrawQuad2D(ui_mainmenu_exit, {495, 337});
 
     Pointi pt = mouse->position();
 
@@ -52,19 +56,19 @@ void GUIWindow_MainMenu::Update() {
             int pY = 0;
             switch (pControlParam) {  // backlight for buttons
                 case 0:
-                    pTexture = assets->getImage_ColorKey("title_new");
+                    pTexture = ui_mainmenu_new;
                     pY = 172;
                     break;
                 case 1:
-                    pTexture = assets->getImage_ColorKey("title_load");
+                    pTexture = ui_mainmenu_load;
                     pY = 227;
                     break;
                 case 2:
-                    pTexture = assets->getImage_ColorKey("title_cred");
+                    pTexture = ui_mainmenu_credits;
                     pY = 282;
                     break;
                 case 3:
-                    pTexture = assets->getImage_ColorKey("title_exit");
+                    pTexture = ui_mainmenu_exit;
                     pY = 337;
                     break;
             }

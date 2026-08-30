@@ -140,8 +140,12 @@ GraphicsImage *game_ui_menu_options_video_background = nullptr;
 GraphicsImage *game_ui_menu_options_video_bloodsplats = nullptr;
 GraphicsImage *game_ui_menu_options_video_coloredlights = nullptr;
 GraphicsImage *game_ui_menu_options_video_tinting = nullptr;
+GraphicsImage *game_ui_menu_options_video_bloodsplats_selected = nullptr;
+GraphicsImage *game_ui_menu_options_video_coloredlights_selected = nullptr;
+GraphicsImage *game_ui_menu_options_video_tinting_selected = nullptr;
+GraphicsImage *game_ui_menu_options_video_return = nullptr;
 std::array<GraphicsImage *, 10> game_ui_menu_options_video_gamma_positions;
-std::array<GraphicsImage *, 5> game_ui_options_controls;
+std::array<GraphicsImage *, 7> game_ui_options_controls;
 
 GraphicsImage *game_ui_evtnpc = nullptr;  // 50795C
 
@@ -182,12 +186,12 @@ extern std::unordered_map<InputAction, PlatformKey> curr_key_map;
 GUIWindow_GameMenu::GUIWindow_GameMenu()
     : GUIWindow(WINDOW_GameMenu, {0, 0}, render->GetRenderDimensions()) {
     game_ui_menu_options = assets->getImage_ColorKey("options");
-    game_ui_menu_new = assets->getImage_ColorKey("new1");
-    game_ui_menu_load = assets->getImage_ColorKey("load1");
-    game_ui_menu_save = assets->getImage_ColorKey("save1");
-    game_ui_menu_controls = assets->getImage_ColorKey("controls1");
-    game_ui_menu_resume = assets->getImage_ColorKey("resume1");
-    game_ui_menu_quit = assets->getImage_ColorKey("quit1");
+    game_ui_menu_new = assets->getImage_Png("images/portable_ui/portable_new_game.png");
+    game_ui_menu_load = assets->getImage_Png("images/portable_ui/portable_load_game.png");
+    game_ui_menu_save = assets->getImage_Png("images/portable_ui/portable_save_game.png");
+    game_ui_menu_controls = assets->getImage_Png("images/portable_ui/portable_controls.png");
+    game_ui_menu_resume = assets->getImage_Png("images/portable_ui/portable_return.png");
+    game_ui_menu_quit = assets->getImage_Png("images/portable_ui/portable_quit.png");
 
     pBtn_NewGame = CreateButton({0x13u, 0x9Bu}, {0xD6u, 0x28u}, BUTTON_TYPE_NORMAL, 0,
         UIMSG_StartNewGame, 0, INPUT_ACTION_NEW_GAME, localization->str(LSTR_NEW_GAME), {game_ui_menu_new});
@@ -209,6 +213,12 @@ void GUIWindow_GameMenu::Update() {
     // -----------------------------------
     // 004156F0 GUI_UpdateWindows --- part
     render->DrawQuad2D(game_ui_menu_options, pViewport.topLeft());
+    render->DrawQuad2D(game_ui_menu_new, {19, 155});
+    render->DrawQuad2D(game_ui_menu_controls, {241, 155});
+    render->DrawQuad2D(game_ui_menu_save, {19, 209});
+    render->DrawQuad2D(game_ui_menu_quit, {241, 209});
+    render->DrawQuad2D(game_ui_menu_load, {19, 263});
+    render->DrawQuad2D(game_ui_menu_resume, {241, 263});
 }
 
 //----- (00491CB5) --------------------------------------------------------
@@ -273,9 +283,11 @@ GUIWindow_GameKeyBindings::GUIWindow_GameKeyBindings()
     : GUIWindow(WINDOW_KeyMappingOptions, {0, 0}, render->GetPresentDimensions()) {
     game_ui_options_controls[0] = assets->getImage_ColorKey("optkb");
     game_ui_options_controls[1] = assets->getImage_ColorKey("optkb_h");
-    game_ui_options_controls[2] = assets->getImage_ColorKey("resume1");
-    game_ui_options_controls[3] = assets->getImage_ColorKey("optkb_1");
-    game_ui_options_controls[4] = assets->getImage_ColorKey("optkb_2");
+    game_ui_options_controls[2] = assets->getImage_Png("images/portable_ui/portable_return.png");
+    game_ui_options_controls[3] = assets->getImage_Png("images/portable_ui/portable_prev.png");
+    game_ui_options_controls[4] = assets->getImage_Png("images/portable_ui/portable_next.png");
+    game_ui_options_controls[5] = assets->getImage_Png("images/portable_ui/portable_back.png");
+    game_ui_options_controls[6] = assets->getImage_Png("images/portable_ui/portable_default.png");
 
     CreateButton({241, 302}, {214, 40}, BUTTON_TYPE_NORMAL, 0, UIMSG_Escape, 0);
 
@@ -341,13 +353,16 @@ void GUIWindow_GameKeyBindings::Update() {
         currently_selected_action_for_binding = INPUT_ACTION_INVALID;
     }
     render->DrawQuad2D(game_ui_options_controls[0], {8, 8});  // draw base texture
+    render->DrawQuad2D(game_ui_options_controls[3], {19, 302});
+    render->DrawQuad2D(game_ui_options_controls[4], {127, 302});
+    render->DrawQuad2D(game_ui_options_controls[5], {19, 324});
+    render->DrawQuad2D(game_ui_options_controls[6], {127, 324});
+    render->DrawQuad2D(game_ui_options_controls[2], {241, 302});
 
     int base_controls_offset = 0;
     if (KeyboardPageNum == 1) {
-        render->DrawQuad2D(game_ui_options_controls[3], {19, 302});
     } else {
         base_controls_offset = 14;
-        render->DrawQuad2D(game_ui_options_controls[4], {127, 302});
     }
 
     for (int i = 0; i < 7; ++i) {
@@ -367,9 +382,13 @@ GUIWindow_GameVideoOptions::GUIWindow_GameVideoOptions()
     // -------------------------------------
     // GameMenuUI_OptionsVideo_Load --- part
     game_ui_menu_options_video_background = assets->getImage_ColorKey("optvid");
-    game_ui_menu_options_video_bloodsplats = assets->getImage_ColorKey("opvdH-bs");
-    game_ui_menu_options_video_coloredlights = assets->getImage_ColorKey("opvdH-cl");
-    game_ui_menu_options_video_tinting = assets->getImage_ColorKey("opvdH-tn");
+    game_ui_menu_options_video_bloodsplats = assets->getImage_Png("images/portable_ui/portable_blood_splats.png");
+    game_ui_menu_options_video_coloredlights = assets->getImage_Png("images/portable_ui/portable_colored_lights.png");
+    game_ui_menu_options_video_tinting = assets->getImage_Png("images/portable_ui/portable_tinting.png");
+    game_ui_menu_options_video_bloodsplats_selected = assets->getImage_Png("images/portable_ui/portable_blood_splats_hover.png");
+    game_ui_menu_options_video_coloredlights_selected = assets->getImage_Png("images/portable_ui/portable_colored_lights_hover.png");
+    game_ui_menu_options_video_tinting_selected = assets->getImage_Png("images/portable_ui/portable_tinting_hover.png");
+    game_ui_menu_options_video_return = assets->getImage_Png("images/portable_ui/portable_return.png");
 
     game_ui_menu_options_video_gamma_positions[0] = assets->getImage_ColorKey("convol10");
     game_ui_menu_options_video_gamma_positions[1] = assets->getImage_ColorKey("convol20");
@@ -418,6 +437,10 @@ void GUIWindow_GameVideoOptions::Update() {
     int gammalevel = engine->config->graphics.Gamma.value();
 
     render->DrawQuad2D(game_ui_menu_options_video_background, {8, 8});  // draw base texture
+    render->DrawQuad2D(game_ui_menu_options_video_bloodsplats, {20, 281});
+    render->DrawQuad2D(game_ui_menu_options_video_coloredlights, {20, 303});
+    render->DrawQuad2D(game_ui_menu_options_video_tinting, {20, 325});
+    render->DrawQuad2D(game_ui_menu_options_video_return, {241, 302});
     // if ( !render->bWindowMode && render->IsGammaSupported() )
     {
         render->DrawQuad2D(game_ui_menu_options_video_gamma_positions[gammalevel], {17 * gammalevel + 42, 162});
@@ -433,11 +456,11 @@ void GUIWindow_GameVideoOptions::Update() {
     }
 
     if (engine->config->graphics.BloodSplats.value())
-        render->DrawQuad2D(game_ui_menu_options_video_bloodsplats, {20, 281});
+        render->DrawQuad2D(game_ui_menu_options_video_bloodsplats_selected, {20, 281});
     if (engine->config->graphics.ColoredLights.value())
-        render->DrawQuad2D(game_ui_menu_options_video_coloredlights, {20, 303});
+        render->DrawQuad2D(game_ui_menu_options_video_coloredlights_selected, {20, 303});
     if (engine->config->graphics.Tinting.value())
-        render->DrawQuad2D(game_ui_menu_options_video_tinting, {20, 325});
+        render->DrawQuad2D(game_ui_menu_options_video_tinting_selected, {20, 325});
 }
 
 OptionsMenuSkin options_menu_skin;  // 507C60
@@ -460,6 +483,9 @@ void OptionsMenuSkin::Release() {
     RELEASE(uTextureID_AlwaysRun);
     RELEASE(uTextureID_WalkSound);
     RELEASE(uTextureID_ShowDamage);
+    RELEASE(uTextureID_Keyboard);
+    RELEASE(uTextureID_Video);
+    RELEASE(uTextureID_Return);
 
 #undef RELEASE
 }
@@ -467,11 +493,11 @@ void OptionsMenuSkin::Release() {
 GUIWindow_GameOptions::GUIWindow_GameOptions()
     : GUIWindow(WINDOW_GameOptions, {0, 0}, render->GetRenderDimensions()) {
     options_menu_skin.uTextureID_Background = assets->getImage_ColorKey("ControlBG");
-    options_menu_skin.uTextureID_TurnSpeed[2] = assets->getImage_ColorKey("con_16x");
-    options_menu_skin.uTextureID_TurnSpeed[1] = assets->getImage_ColorKey("con_32x");
-    options_menu_skin.uTextureID_TurnSpeed[0] = assets->getImage_ColorKey("con_Smoo");
-    options_menu_skin.uTextureID_ArrowLeft = assets->getImage_Alpha("con_ArrL");
-    options_menu_skin.uTextureID_ArrowRight = assets->getImage_Alpha("con_ArrR");
+    options_menu_skin.uTextureID_TurnSpeed[2] = assets->getImage_Png("images/portable_ui/portable_16x.png");
+    options_menu_skin.uTextureID_TurnSpeed[1] = assets->getImage_Png("images/portable_ui/portable_32x.png");
+    options_menu_skin.uTextureID_TurnSpeed[0] = assets->getImage_Png("images/portable_ui/portable_smooth.png");
+    options_menu_skin.uTextureID_ArrowLeft = assets->getImage_Png("images/portable_ui/portable_con_arrl.png");
+    options_menu_skin.uTextureID_ArrowRight = assets->getImage_Png("images/portable_ui/portable_con_arrr.png");
     options_menu_skin.uTextureID_SoundLevels[0] = assets->getImage_ColorKey("convol10");
     options_menu_skin.uTextureID_SoundLevels[1] = assets->getImage_ColorKey("convol20");
     options_menu_skin.uTextureID_SoundLevels[2] = assets->getImage_ColorKey("convol30");
@@ -482,10 +508,13 @@ GUIWindow_GameOptions::GUIWindow_GameOptions()
     options_menu_skin.uTextureID_SoundLevels[7] = assets->getImage_ColorKey("convol80");
     options_menu_skin.uTextureID_SoundLevels[8] = assets->getImage_ColorKey("convol90");
     options_menu_skin.uTextureID_SoundLevels[9] = assets->getImage_ColorKey("convol00");
-    options_menu_skin.uTextureID_FlipOnExit = assets->getImage_ColorKey("option04");
-    options_menu_skin.uTextureID_AlwaysRun = assets->getImage_ColorKey("option03");
-    options_menu_skin.uTextureID_ShowDamage = assets->getImage_ColorKey("option02");
-    options_menu_skin.uTextureID_WalkSound = assets->getImage_ColorKey("option01");
+    options_menu_skin.uTextureID_FlipOnExit = assets->getImage_Png("images/portable_ui/portable_flip_on_exit.png");
+    options_menu_skin.uTextureID_AlwaysRun = assets->getImage_Png("images/portable_ui/portable_always_run.png");
+    options_menu_skin.uTextureID_ShowDamage = assets->getImage_Png("images/portable_ui/portable_show_hints.png");
+    options_menu_skin.uTextureID_WalkSound = assets->getImage_Png("images/portable_ui/portable_walk_sound.png");
+    options_menu_skin.uTextureID_Keyboard = assets->getImage_Png("images/portable_ui/portable_keyboard.png");
+    options_menu_skin.uTextureID_Video = assets->getImage_Png("images/portable_ui/portable_video_options.png");
+    options_menu_skin.uTextureID_Return = assets->getImage_Png("images/portable_ui/portable_return.png");
 
     CreateButton({22, 270}, options_menu_skin.uTextureID_TurnSpeed[2]->size(), BUTTON_TYPE_NORMAL, 0,
                  UIMSG_SetTurnSpeed, 0x80);
@@ -529,6 +558,16 @@ GUIWindow_GameOptions::GUIWindow_GameOptions()
 void GUIWindow_GameOptions::Update() {
     render->DrawQuad2D(game_ui_menu_options, {8, 8});
     render->DrawQuad2D(options_menu_skin.uTextureID_Background, {8, 132});
+    render->DrawQuad2D(options_menu_skin.uTextureID_Keyboard, {19, 140});
+    render->DrawQuad2D(options_menu_skin.uTextureID_Video, {19, 194});
+    render->DrawQuad2D(options_menu_skin.uTextureID_Return, {241, 302});
+    render->DrawQuad2D(options_menu_skin.uTextureID_TurnSpeed[2], {22, 270});
+    render->DrawQuad2D(options_menu_skin.uTextureID_TurnSpeed[1], {93, 270});
+    render->DrawQuad2D(options_menu_skin.uTextureID_TurnSpeed[0], {164, 270});
+    render->DrawQuad2D(options_menu_skin.uTextureID_WalkSound, {20, 303});
+    render->DrawQuad2D(options_menu_skin.uTextureID_ShowDamage, {128, 303});
+    render->DrawQuad2D(options_menu_skin.uTextureID_AlwaysRun, {20, 325});
+    render->DrawQuad2D(options_menu_skin.uTextureID_FlipOnExit, {128, 325});
 
     switch ((int) engine->config->settings.TurnSpeed.value()) {
         case 64:

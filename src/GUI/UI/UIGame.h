@@ -86,7 +86,7 @@ extern GraphicsImage *game_ui_btn_settings;
 
 extern GraphicsImage *game_ui_dialogue_background;
 
-extern std::array<GraphicsImage *, 5> game_ui_options_controls;
+extern std::array<GraphicsImage *, 7> game_ui_options_controls;
 
 extern GraphicsImage *game_ui_evtnpc;  // 50795C
 
@@ -131,5 +131,8 @@ struct OptionsMenuSkin {
     GraphicsImage *uTextureID_AlwaysRun = nullptr;        // 507CB0
     GraphicsImage *uTextureID_WalkSound = nullptr;        // 507CB4
     GraphicsImage *uTextureID_ShowDamage = nullptr;       // 507CB8
+    GraphicsImage *uTextureID_Keyboard = nullptr;
+    GraphicsImage *uTextureID_Video = nullptr;
+    GraphicsImage *uTextureID_Return = nullptr;
 };
 extern OptionsMenuSkin options_menu_skin;  // 507C60
