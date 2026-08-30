@@ -28,10 +28,10 @@ GUIWindow_QuestBook::GUIWindow_QuestBook() {
     ui_book_quests_background = assets->getImage_Solid("sbquiknot");
     ui_book_quest_div_bar = assets->getImage_Alpha("divbar");
 
-    ui_book_button1_on = assets->getImage_Alpha("tab-an-6b");
-    ui_book_button2_on = assets->getImage_Alpha("tab-an-7b");
-    ui_book_button1_off = assets->getImage_Alpha("tab-an-6a");
-    ui_book_button2_off = assets->getImage_Alpha("tab-an-7a");
+    ui_book_button1_on = assets->getImage_Png("images/portable_ui/portable_tab_an_6b.png");
+    ui_book_button2_on = assets->getImage_Png("images/portable_ui/portable_tab_an_7b.png");
+    ui_book_button1_off = assets->getImage_Png("images/portable_ui/portable_tab_an_6a.png");
+    ui_book_button2_off = assets->getImage_Png("images/portable_ui/portable_tab_an_7a.png");
 
     pBtn_Book_1 = CreateButton(pViewport.topLeft() + Pointi(398, 1), ui_book_button1_on->size(), BUTTON_TYPE_NORMAL, 0,
                                UIMSG_ClickBooksBtn, std::to_underlying(BOOK_PREV_PAGE), INPUT_ACTION_DIALOG_LEFT, localization->str(LSTR_SCROLL_UP), {ui_book_button1_on});

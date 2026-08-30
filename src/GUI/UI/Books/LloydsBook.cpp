@@ -52,8 +52,8 @@ GUIWindow_LloydsBook::GUIWindow_LloydsBook(Pid casterPid, SpellCastFlags castFla
 
     ui_book_lloyds_backgrounds[0] = assets->getImage_ColorKey("sbmap");
     ui_book_lloyds_backgrounds[1] = assets->getImage_ColorKey("sbmap");
-    ui_book_button1_on = assets->getImage_Alpha("tab-an-6b");
-    ui_book_button1_off = assets->getImage_Alpha("tab-an-6a");
+    ui_book_button1_on = assets->getImage_Png("images/portable_ui/portable_tab_an_6b.png");
+    ui_book_button1_off = assets->getImage_Png("images/portable_ui/portable_tab_an_6a.png");
 
     pBtn_Book_1 = CreateButton({415, 13}, {39, 36}, BUTTON_TYPE_NORMAL, 0, UIMSG_LloydBookFlipButton, 0, INPUT_ACTION_INVALID, localization->str(LSTR_SET_BEACON));
     pBtn_Book_2 = CreateButton({415, 48}, {39, 36}, BUTTON_TYPE_NORMAL, 0, UIMSG_LloydBookFlipButton, 1, INPUT_ACTION_INVALID, localization->str(LSTR_RECALL_BEACON));
