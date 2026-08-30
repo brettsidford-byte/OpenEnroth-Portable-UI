@@ -1077,10 +1077,10 @@ void UI_Create() {
     game_ui_monster_hp_yellow = assets->getImage_ColorKey("mhp_yel");
     ui_leather_mm7 = assets->getImage_Solid("LEATHER");
     ui_leather_mm6 = assets->getImage_Solid("ibground");
-    dialogue_ui_x_x_u = assets->getImage_ColorKey("x_x_u");
-    ui_buttdesc2 = assets->getImage_Alpha("BUTTESC2");
-    dialogue_ui_x_ok_u = assets->getImage_ColorKey("x_ok_u");
-    ui_buttyes2 = assets->getImage_Alpha("BUTTYES2");
+    dialogue_ui_x_x_u = assets->getImage_Png("images/portable_ui/portable_x_x_u.png");
+    ui_buttdesc2 = assets->getImage_Png("images/portable_ui/portable_buttesc2.png");
+    dialogue_ui_x_ok_u = assets->getImage_Png("images/portable_ui/portable_x_ok_u.png");
+    ui_buttyes2 = assets->getImage_Png("images/portable_ui/portable_buttyes2.png");
 
     pPrimaryWindow = std::make_unique<GUIWindow>(WINDOW_GameUI, Pointi{0, 0}, render->GetRenderDimensions());
     pPrimaryWindow->CreateButton({7, 8}, {460, 343}, BUTTON_TYPE_NORMAL, 0, UIMSG_MouseLeftClickInGame, 0);
@@ -1151,4 +1151,3 @@ void UI_Create() {
 
     LoadPartyBuffIcons();
 }
-
