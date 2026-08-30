@@ -6,6 +6,7 @@
 #include "Utility/MapAccess.h"
 
 #include "InputEnumFunctions.h"
+#include "InputActionContexts.h"
 
 std::shared_ptr<Io::KeyboardActionMapping> keyboardActionMapping = nullptr;
 
@@ -66,6 +67,22 @@ Io::Keybindings Io::KeyboardActionMapping::defaultKeybindings(KeybindingsQuery q
     return result;
 }
 
+Io::Keybindings Io::KeyboardActionMapping::currentGamepadKeybindings(KeybindingsQuery query) const {
+    Io::Keybindings result;
+    for (const auto &[inputAction, configEntry] : _gamepadEntryByInputAction)
+        if (query == KEYBINDINGS_ALL || (query == KEYBINDINGS_CONFIGURABLE && allConfigurableInputActions().contains(inputAction)))
+            result.emplace(inputAction, configEntry->value());
+    return result;
+}
+
+Io::Keybindings Io::KeyboardActionMapping::defaultGamepadKeybindings(KeybindingsQuery query) const {
+    Io::Keybindings result;
+    for (const auto &[inputAction, configEntry] : _gamepadEntryByInputAction)
+        if (query == KEYBINDINGS_ALL || (query == KEYBINDINGS_CONFIGURABLE && allConfigurableInputActions().contains(inputAction)))
+            result.emplace(inputAction, configEntry->defaultValue());
+    return result;
+}
+
 void Io::KeyboardActionMapping::applyKeybindings(const Io::Keybindings &keybindings) {
     for (const auto &[inputAction, key] : keybindings) {
         KeyConfigEntry *keyboardEntry = valueOr(_keyboardEntryByInputAction, inputAction, nullptr);
@@ -88,7 +105,7 @@ void Io::KeyboardActionMapping::applyKeybindings(const Io::Keybindings &keybindi
         // A physical gamepad control should belong to one configurable action. Reassigning it
         // therefore removes the old gamepad binding instead of leaving both actions active.
         for (const auto &[otherAction, otherEntry] : _gamepadEntryByInputAction) {
-            if (otherAction != inputAction && otherEntry->value() == key)
+            if (otherAction != inputAction && otherEntry->value() == key && inputActionsShareContext(inputAction, otherAction))
                 otherEntry->setValue(PlatformKey::KEY_NONE);
         }
 

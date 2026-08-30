@@ -35,6 +35,8 @@ class KeyboardActionMapping {
 
     [[nodiscard]] Keybindings currentKeybindings(KeybindingsQuery query) const;
     [[nodiscard]] Keybindings defaultKeybindings(KeybindingsQuery query) const;
+    [[nodiscard]] Keybindings currentGamepadKeybindings(KeybindingsQuery query) const;
+    [[nodiscard]] Keybindings defaultGamepadKeybindings(KeybindingsQuery query) const;
     void applyKeybindings(const Keybindings &keybindings);
 
  private:
