@@ -639,7 +639,7 @@ void GUIWindow_CharacterRecord::Update() {
             CharacterUI_ReleaseButtons();
             releaseAwardsScrollBar();
             CharacterUI_StatsTab_Draw(player);
-            render->DrawQuad2D(assets->getImage_ColorKey("ib-cd1-d"), pCharacterScreen_StatsBtn->rect.topLeft());
+            render->DrawQuad2D(assets->getImage_Png("images/portable_ui/portable_ib_cd1_d.png"), pCharacterScreen_StatsBtn->rect.topLeft());
             break;
         }
         case WINDOW_CharacterWindow_Skills: {
@@ -649,21 +649,21 @@ void GUIWindow_CharacterRecord::Update() {
             }
             releaseAwardsScrollBar();
             CharacterUI_SkillsTab_Draw(player);
-            render->DrawQuad2D(assets->getImage_ColorKey("ib-cd2-d"), pCharacterScreen_SkillsBtn->rect.topLeft());
+            render->DrawQuad2D(assets->getImage_Png("images/portable_ui/portable_ib_cd2_d.png"), pCharacterScreen_SkillsBtn->rect.topLeft());
             break;
         }
         case WINDOW_CharacterWindow_Awards: {
             CharacterUI_ReleaseButtons();
             createAwardsScrollBar();
             CharacterUI_AwardsTab_Draw(player);
-            render->DrawQuad2D(assets->getImage_ColorKey("ib-cd4-d"), pCharacterScreen_AwardsBtn->rect.topLeft());
+            render->DrawQuad2D(assets->getImage_Png("images/portable_ui/portable_ib_cd4_d.png"), pCharacterScreen_AwardsBtn->rect.topLeft());
             break;
         }
         case WINDOW_CharacterWindow_Inventory: {
             CharacterUI_ReleaseButtons();
             releaseAwardsScrollBar();
             CharacterUI_InventoryTab_Draw(player, false);
-            render->DrawQuad2D(assets->getImage_ColorKey("ib-cd3-d"), pCharacterScreen_InventoryBtn->rect.topLeft());
+            render->DrawQuad2D(assets->getImage_Png("images/portable_ui/portable_ib_cd3_d.png"), pCharacterScreen_InventoryBtn->rect.topLeft());
             break;
         }
         default:
@@ -1369,11 +1369,11 @@ void CharacterUI_LoadPaperdollTextures() {
     ui_ar_dn_up = assets->getImage_Solid("ar_dn_up");
     ui_ar_dn_dn = assets->getImage_Solid("ar_dn_dn");
 
-    paperdoll_dbrds[9] = assets->getImage_Solid("ib-cd1-d");
-    paperdoll_dbrds[7] = assets->getImage_Solid("ib-cd2-d");
-    paperdoll_dbrds[5] = assets->getImage_Solid("ib-cd3-d");
-    paperdoll_dbrds[3] = assets->getImage_Solid("ib-cd4-d");
-    paperdoll_dbrds[1] = assets->getImage_Solid("ib-cd5-d");
+    paperdoll_dbrds[9] = assets->getImage_Png("images/portable_ui/portable_ib_cd1_d.png");
+    paperdoll_dbrds[7] = assets->getImage_Png("images/portable_ui/portable_ib_cd2_d.png");
+    paperdoll_dbrds[5] = assets->getImage_Png("images/portable_ui/portable_ib_cd3_d.png");
+    paperdoll_dbrds[3] = assets->getImage_Png("images/portable_ui/portable_ib_cd4_d.png");
+    paperdoll_dbrds[1] = assets->getImage_Png("images/portable_ui/portable_ib_cd5_d.png");
 
     auto loadTexture = [&](const auto &map, int itemIndex, int bodyIndex, int shoulderIndex) {
         std::string name = GetItemTextureFilename(*valuePtr(map, itemIndex), bodyIndex + 1, shoulderIndex);
