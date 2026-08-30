@@ -51,6 +51,7 @@
 #include "GUI/UI/UISpellbook.h"
 
 #include "Io/InputEnumFunctions.h"
+#include "Io/InputActionContexts.h"
 #include "Io/Mouse.h"
 
 #include "Core/Serialization/PlatformKeySerialization.h"
@@ -316,7 +317,7 @@ GUIWindow_GameKeyBindings::GUIWindow_GameKeyBindings()
     KeyboardPageNum = 1;
 
     key_map_conflicted.clear();
-    curr_key_map = keyboardActionMapping->currentKeybindings(KEYBINDINGS_CONFIGURABLE);
+    curr_key_map = keyboardActionMapping->currentGamepadKeybindings(KEYBINDINGS_ALL);
 }
 
 //----- (004142D3) --------------------------------------------------------
@@ -335,8 +336,8 @@ void GUIWindow_GameKeyBindings::Update() {
 
         bool anyConflicts = false;
         for (auto x : curr_key_map) {
-            for (auto y : curr_key_map) {
-                if (x.first != y.first && x.second == y.second) {
+        for (auto y : curr_key_map) {
+            if (x.first != y.first && x.second != PlatformKey::KEY_NONE && x.second == y.second && inputActionsShareContext(x.first, y.first)) {
                     key_map_conflicted.insert(x.first);
                     key_map_conflicted.insert(y.first);
                     anyConflicts = true;
@@ -359,21 +360,20 @@ void GUIWindow_GameKeyBindings::Update() {
     render->DrawQuad2D(game_ui_options_controls[6], {127, 324});
     render->DrawQuad2D(game_ui_options_controls[2], {241, 302});
 
-    int base_controls_offset = 0;
-    if (KeyboardPageNum == 1) {
-    } else {
-        base_controls_offset = 14;
-    }
+    const InputActionPage &page = inputActionPage(KeyboardPageNum);
+    DrawText(assets->pFontLucida.get(), {20, 306}, ui_gamemenu_keys_action_name_color, "< PREV", pGUIWindow_CurrentMenu->frameRect);
+    DrawText(assets->pFontLucida.get(), {150, 306}, ui_gamemenu_keys_action_name_color, "NEXT >", pGUIWindow_CurrentMenu->frameRect);
+    DrawText(assets->pFontLucida.get(), {190, 118}, ui_gamemenu_keys_action_name_color, page.title, pGUIWindow_CurrentMenu->frameRect);
 
-    for (int i = 0; i < 7; ++i) {
-        InputAction action1 = (InputAction)(base_controls_offset + i);
-        DrawText(assets->pFontLucida.get(), {23, 142 + i * 21}, ui_gamemenu_keys_action_name_color, GetDisplayName(action1), pGUIWindow_CurrentMenu->frameRect);
-        DrawText(assets->pFontLucida.get(), {127, 142 + i * 21}, GameMenuUI_GetKeyBindingColor(action1), GetDisplayName(curr_key_map[action1]), pGUIWindow_CurrentMenu->frameRect);
-
-        int j = i + 7;
-        InputAction action2 = (InputAction)(base_controls_offset + j);
-        DrawText(assets->pFontLucida.get(), {247, 142 + i * 21}, ui_gamemenu_keys_action_name_color, GetDisplayName(action2), pGUIWindow_CurrentMenu->frameRect);
-        DrawText(assets->pFontLucida.get(), {350, 142 + i * 21}, GameMenuUI_GetKeyBindingColor(action2), GetDisplayName(curr_key_map[action2]), pGUIWindow_CurrentMenu->frameRect);
+    for (int row = 0; row < static_cast<int>(page.count); ++row) {
+        InputAction action1 = page.actions[row];
+        int column = row / 7;
+        int line = row % 7;
+        int actionX = column == 0 ? 23 : 247;
+        int keyX = column == 0 ? 127 : 350;
+        int y = 142 + line * 21;
+        DrawText(assets->pFontLucida.get(), {actionX, y}, ui_gamemenu_keys_action_name_color, GetDisplayName(action1).substr(0, 10), pGUIWindow_CurrentMenu->frameRect);
+        DrawText(assets->pFontLucida.get(), {keyX, y}, GameMenuUI_GetKeyBindingColor(action1), GetDisplayName(curr_key_map[action1]), pGUIWindow_CurrentMenu->frameRect);
     }
 }
 
