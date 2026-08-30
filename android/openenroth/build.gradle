@@ -1,6 +1,15 @@
-def buildAsLibrary = false
-def buildAsApplication = true
-apply plugin: 'com.android.application'
+def buildAsLibrary = project.hasProperty('BUILD_AS_LIBRARY')
+def buildAsApplication = !buildAsLibrary
+if (buildAsApplication) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
+// Keep the application extension available for CI release configuration.
+// The Android project is packaged as an APK in the portable build.
+if (!project.plugins.hasPlugin('com.android.application')) {
+    apply plugin: 'com.android.application'
+}
 
 def wireSdlJarForVariant = { variant ->
     def vName = variant.name                      // "debug", "release", etc.
