@@ -71,7 +71,7 @@ jobs:
         with:
           build-root-directory: android
           job-id: android-Release
-          arguments: assembleRelease --info -Pandroid.native.buildOutput=verbose
+          arguments: assembleRelease --info --no-configuration-cache -Pandroid.native.buildOutput=verbose
         env:
           CMAKE_BUILD_PARALLEL_LEVEL: 4
           GITHUBARCH: arm64-v8a
