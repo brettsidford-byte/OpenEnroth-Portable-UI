@@ -78,11 +78,11 @@ GUIWindow_Rest::GUIWindow_Rest()
 
     hourglassLoopTimer = 0_ticks;
     rest_ui_restmain = assets->getImage_Alpha("restmain");
-    rest_ui_btn_1 = assets->getImage_Alpha("restb1");
-    rest_ui_btn_2 = assets->getImage_Alpha("restb2");
-    rest_ui_btn_3 = assets->getImage_Alpha("restb3");
-    rest_ui_btn_4 = assets->getImage_Alpha("restb4");
-    rest_ui_btn_exit = assets->getImage_Alpha("restexit");
+    rest_ui_btn_1 = assets->getImage_Png("images/portable_ui/portable_restb1.png");
+    rest_ui_btn_2 = assets->getImage_Png("images/portable_ui/portable_restb2.png");
+    rest_ui_btn_3 = assets->getImage_Png("images/portable_ui/portable_restb3.png");
+    rest_ui_btn_4 = assets->getImage_Png("images/portable_ui/portable_restb4.png");
+    rest_ui_btn_exit = assets->getImage_Png("images/portable_ui/portable_restexit.png");
 
     OutdoorLocation::LoadActualSkyFrame();
 

@@ -593,7 +593,7 @@ GUIWindow_CharacterRecord::GUIWindow_CharacterRecord(int uActiveCharacter, Scree
     ui_character_stats_background = assets->getImage_ColorKey("fr_stats");
     ui_character_inventory_background_strip = assets->getImage_ColorKey("fr_strip");
 
-    scrollstop = assets->getImage_ColorKey("con_x");
+    scrollstop = assets->getImage_Png("images/portable_ui/portable_con_x.png");
 }
 
 void GUIWindow_CharacterRecord::releaseAwardsScrollBar() {
@@ -1364,16 +1364,21 @@ void CharacterUI_LoadPaperdollTextures() {
         }
     }
 
-    ui_ar_up_up = assets->getImage_Solid("ar_up_up");
-    ui_ar_up_dn = assets->getImage_Solid("ar_up_dn");
-    ui_ar_dn_up = assets->getImage_Solid("ar_dn_up");
-    ui_ar_dn_dn = assets->getImage_Solid("ar_dn_dn");
+    ui_ar_up_up = assets->getImage_Png("images/portable_ui/portable_ar_up_up.png");
+    ui_ar_up_dn = assets->getImage_Png("images/portable_ui/portable_ar_up_dn.png");
+    ui_ar_dn_up = assets->getImage_Png("images/portable_ui/portable_ar_dn_up.png");
+    ui_ar_dn_dn = assets->getImage_Png("images/portable_ui/portable_ar_dn_dn.png");
 
     paperdoll_dbrds[9] = assets->getImage_Png("images/portable_ui/portable_ib_cd1_d.png");
+    paperdoll_dbrds[10] = assets->getImage_Png("images/portable_ui/portable_ib_cd1_u.png");
     paperdoll_dbrds[7] = assets->getImage_Png("images/portable_ui/portable_ib_cd2_d.png");
+    paperdoll_dbrds[8] = assets->getImage_Png("images/portable_ui/portable_ib_cd2_u.png");
     paperdoll_dbrds[5] = assets->getImage_Png("images/portable_ui/portable_ib_cd3_d.png");
+    paperdoll_dbrds[6] = assets->getImage_Png("images/portable_ui/portable_ib_cd3_u.png");
     paperdoll_dbrds[3] = assets->getImage_Png("images/portable_ui/portable_ib_cd4_d.png");
+    paperdoll_dbrds[4] = assets->getImage_Png("images/portable_ui/portable_ib_cd4_u.png");
     paperdoll_dbrds[1] = assets->getImage_Png("images/portable_ui/portable_ib_cd5_d.png");
+    paperdoll_dbrds[2] = assets->getImage_Png("images/portable_ui/portable_ib_cd5_u.png");
 
     auto loadTexture = [&](const auto &map, int itemIndex, int bodyIndex, int shoulderIndex) {
         std::string name = GetItemTextureFilename(*valuePtr(map, itemIndex), bodyIndex + 1, shoulderIndex);
