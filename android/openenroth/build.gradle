@@ -1,10 +1,7 @@
-def buildAsLibrary = project.hasProperty('BUILD_AS_LIBRARY');
+def buildAsLibrary = project.hasProperty('BUILD_AS_LIBRARY')
 def buildAsApplication = !buildAsLibrary
-if (buildAsApplication) {
-    apply plugin: 'com.android.application'
-} else {
-    apply plugin: 'com.android.library'
-}
+// Apply the Android plugin explicitly before configuring its extension.
+project.pluginManager.apply(buildAsApplication ? 'com.android.application' : 'com.android.library')
 
 def wireSdlJarForVariant = { variant ->
     def vName = variant.name                      // "debug", "release", etc.
