@@ -1,4 +1,4 @@
-name: Android ARM64 Test APK
+name: Android ARM64 Portable UI Test APK
 
 on:
   pull_request:
@@ -61,7 +61,7 @@ jobs:
       - name: Upload ARM64 test APK
         uses: actions/upload-artifact@v4
         with:
-          name: openenroth-android-arm64-debug
+          name: openenroth-portable-ui-arm64-debug
           path: android/openenroth/build/outputs/apk/debug/openenroth-debug.apk
           if-no-files-found: error
           retention-days: 14
