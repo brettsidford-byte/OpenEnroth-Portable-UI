@@ -63,8 +63,8 @@ androidConfig.with {
         targetSdkVersion 31
         // CI supplies monotonically increasing release metadata. Local builds
         // retain sensible defaults so Android Studio remains easy to use.
-        versionCode (System.getenv("OE_VERSION_CODE") ?: "1").toInteger()
-        versionName System.getenv("OE_VERSION_NAME") ?: "1.0"
+        versionCode = (System.getenv("OE_VERSION_CODE") ?: "1").toInteger()
+        versionName = System.getenv("OE_VERSION_NAME") ?: "1.0"
         externalNativeBuild {
             if ( System.env['GITHUBARCH'] == "universal" || System.env['GITHUBARCH'] == null) {
                 cmake {
