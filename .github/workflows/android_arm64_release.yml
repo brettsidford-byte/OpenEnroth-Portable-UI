@@ -60,7 +60,7 @@ jobs:
           printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/openenroth-portable-ui.jks"
 
       - name: Run ccache
-        uses: hendrikmuhs/ccache-action@v1.2.18
+        uses: hendrikmuhs/ccache-action@v1.2.24
         with:
           key: android-Release-universal
           verbose: 2
@@ -92,7 +92,7 @@ jobs:
           sha256sum "OpenEnroth-Portable-UI-${OE_VERSION_NAME}-arm64.apk" > "OpenEnroth-Portable-UI-${OE_VERSION_NAME}-arm64.apk.sha256"
 
       - name: Upload signed release APK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: openenroth-portable-ui-${{ env.OE_VERSION_NAME }}-arm64-release
           path: |

@@ -16,6 +16,8 @@
 #include "Media/Audio/AudioPlayer.h"
 
 GraphicsImage *ui_game_quickref_background = nullptr;
+GraphicsImage *ui_game_quickref_exit = nullptr;
+GraphicsImage *ui_game_quickref_exit_pressed = nullptr;
 
 GUIWindow_QuickReference::GUIWindow_QuickReference() : GUIWindow(WINDOW_QuickReference, {0, 0}, render->GetRenderDimensions()) {
     // 004304E7 Game_EventLoop --- part
@@ -27,8 +29,10 @@ GUIWindow_QuickReference::GUIWindow_QuickReference() : GUIWindow(WINDOW_QuickRef
     if (!ui_game_quickref_background)
         ui_game_quickref_background = assets->getImage_ColorKey("quikref");
 
+    ui_game_quickref_exit = assets->getImage_Png("images/portable_ui/portable_quickref_exit_u.png");
+    ui_game_quickref_exit_pressed = assets->getImage_Png("images/portable_ui/portable_quickref_exit_d.png");
     pBtn_ExitCancel = CreateButton({0x187u, 0x13Cu}, {0x4Bu, 0x21u}, BUTTON_TYPE_NORMAL, 0, UIMSG_Escape, 0,
-                                   INPUT_ACTION_INVALID, localization->str(LSTR_EXIT_DIALOGUE), {ui_buttdesc2});
+                                   INPUT_ACTION_INVALID, localization->str(LSTR_EXIT_DIALOGUE), {ui_game_quickref_exit_pressed});
 }
 
 void GUIWindow_QuickReference::Update() {
@@ -45,6 +49,7 @@ void GUIWindow_QuickReference::Update() {
     int pFontHeight = assets->pFontArrus->GetHeight() + 1;
 
     render->DrawQuad2D(ui_game_quickref_background, {8, 8});
+    render->DrawQuad2D(ui_game_quickref_exit, {0x187, 0x13C});
 
     pGUIWindow_CurrentMenu->DrawTextInRect(assets->pFontArrus.get(), {22, 18}, colorTable.White, localization->str(LSTR_NAME), 60, 0);
     pGUIWindow_CurrentMenu->DrawTextInRect(assets->pFontArrus.get(), {22, 47}, colorTable.White, localization->str(LSTR_LEVEL), 60, 0);

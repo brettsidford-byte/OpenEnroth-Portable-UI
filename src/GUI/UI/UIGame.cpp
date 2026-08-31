@@ -859,6 +859,13 @@ void GameUI_DrawRightPanelFrames() {
     render->DrawQuad2D(game_ui_leftframe, {0, 8});
     render->DrawQuad2D(game_ui_rightframe, {468, 0});
     render->DrawQuad2D(game_ui_bottomframe, {0, 352});
+    // The original bottom-frame image contains the stock HUD buttons. Draw the
+    // Portable UI replacements over those baked-in images every frame so the
+    // released state is visible, not just the momentary click overlay.
+    render->DrawQuad2D(game_ui_btn_cast, {476, 450});
+    render->DrawQuad2D(game_ui_btn_rest, {518, 450});
+    render->DrawQuad2D(game_ui_btn_quickref, {560, 450});
+    render->DrawQuad2D(game_ui_btn_settings, {602, 450});
     GameUI_DrawRightPanelItems();
 
     // render->EndScene();
