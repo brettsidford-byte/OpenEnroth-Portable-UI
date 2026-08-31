@@ -361,8 +361,6 @@ void GUIWindow_GameKeyBindings::Update() {
     render->DrawQuad2D(game_ui_options_controls[2], {241, 302});
 
     const InputActionPage &page = inputActionPage(KeyboardPageNum);
-    DrawText(assets->pFontLucida.get(), {20, 306}, ui_gamemenu_keys_action_name_color, "< PREV", pGUIWindow_CurrentMenu->frameRect);
-    DrawText(assets->pFontLucida.get(), {150, 306}, ui_gamemenu_keys_action_name_color, "NEXT >", pGUIWindow_CurrentMenu->frameRect);
     DrawText(assets->pFontLucida.get(), {190, 118}, ui_gamemenu_keys_action_name_color, page.title, pGUIWindow_CurrentMenu->frameRect);
 
     for (int row = 0; row < static_cast<int>(page.count); ++row) {
@@ -372,8 +370,10 @@ void GUIWindow_GameKeyBindings::Update() {
         int actionX = column == 0 ? 23 : 247;
         int keyX = column == 0 ? 127 : 350;
         int y = 142 + line * 21;
+        auto binding = curr_key_map.find(action1);
+        PlatformKey key = binding != curr_key_map.end() ? binding->second : PlatformKey::KEY_NONE;
         DrawText(assets->pFontLucida.get(), {actionX, y}, ui_gamemenu_keys_action_name_color, GetDisplayName(action1).substr(0, 10), pGUIWindow_CurrentMenu->frameRect);
-        DrawText(assets->pFontLucida.get(), {keyX, y}, GameMenuUI_GetKeyBindingColor(action1), GetDisplayName(curr_key_map[action1]), pGUIWindow_CurrentMenu->frameRect);
+        DrawText(assets->pFontLucida.get(), {keyX, y}, GameMenuUI_GetKeyBindingColor(action1), GetDisplayName(key), pGUIWindow_CurrentMenu->frameRect);
     }
 }
 
