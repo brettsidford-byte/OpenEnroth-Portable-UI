@@ -30,7 +30,8 @@ def wireSdlJarForVariant = { variant ->
     }
 }
 
-android {
+def androidConfig = extensions.getByType(com.android.build.gradle.AppExtension)
+androidConfig.with {
     def keyStorePath = System.getenv("SIGNING_KEYSTORE") ?: "keystore.jks"
     def keyStoreFile = file(keyStorePath)
     if ( keyStoreFile.exists() ) {
