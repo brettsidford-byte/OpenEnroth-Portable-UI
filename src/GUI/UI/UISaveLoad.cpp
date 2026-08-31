@@ -357,7 +357,7 @@ void GUIWindow_Load::Update() {
     drawSaveLoad();
     // The original Load/Cancel controls are part of the menu background.
     // Repaint the Portable controls last in both in-game and main-menu modes.
-    render->DrawQuad2D(saveload_ui_loadu, {241, 302});
+    render->DrawQuad2D(saveload_ui_loadu, pBtnLoadSlot->rect.topLeft());
     render->DrawQuad2D(saveload_ui_x_u, pBtnCancel->rect.topLeft());
 }
 

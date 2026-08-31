@@ -66,7 +66,6 @@ GUIWindow_MapBook::GUIWindow_MapBook() {
 }
 
 void GUIWindow_MapBook::Update() {
-    render->DrawQuad2D(ui_exit_cancel_button_background, {471, 445});
     render->DrawQuad2D(ui_book_map_background, pViewport.topLeft());
 
     auto [minX, maxX] = viewparams->GetMapViewMinMaxX();
@@ -147,6 +146,28 @@ void GUIWindow_MapBook::Update() {
 
     map_window.x = 0;
     DrawTitleText(assets->pFontComic.get(), 0, 320, ui_book_map_coordinates_color, party_coordinates, 0, map_window);
+
+    // The map and frame are drawn after the first control pass. Repaint all
+    // Portable controls last so none can be hidden by the stock artwork.
+    bool zoomInOff = (_bookButtonClicked && _bookButtonAction == BOOK_ZOOM_IN) || viewparams->uMapBookMapZoom / 128 >= 12;
+    bool zoomOutOff = (_bookButtonClicked && _bookButtonAction == BOOK_ZOOM_OUT) || viewparams->uMapBookMapZoom / 128 <= 3;
+    bool scrollUpOff = (_bookButtonClicked && _bookButtonAction == BOOK_SCROLL_UP) || viewparams->sViewCenterY >= maxY;
+    bool scrollDownOff = (_bookButtonClicked && _bookButtonAction == BOOK_SCROLL_DOWN) || viewparams->sViewCenterY <= minY;
+    bool scrollRightOff = (_bookButtonClicked && _bookButtonAction == BOOK_SCROLL_RIGHT) || viewparams->sViewCenterX >= maxX;
+    bool scrollLeftOff = (_bookButtonClicked && _bookButtonAction == BOOK_SCROLL_LEFT) || viewparams->sViewCenterX <= minX;
+    render->DrawQuad2D(zoomInOff ? ui_book_button1_off : ui_book_button1_on,
+                       pViewport.topLeft() + (zoomInOff ? Pointi(408, 2) : Pointi(398, 1)));
+    render->DrawQuad2D(zoomOutOff ? ui_book_button2_off : ui_book_button2_on,
+                       pViewport.topLeft() + (zoomOutOff ? Pointi(408, 38) : Pointi(398, 38)));
+    render->DrawQuad2D(scrollUpOff ? ui_book_button3_off : ui_book_button3_on,
+                       pViewport.topLeft() + (scrollUpOff ? Pointi(408, 113) : Pointi(398, 113)));
+    render->DrawQuad2D(scrollDownOff ? ui_book_button4_off : ui_book_button4_on,
+                       pViewport.topLeft() + (scrollDownOff ? Pointi(408, 150) : Pointi(399, 150)));
+    render->DrawQuad2D(scrollRightOff ? ui_book_button5_off : ui_book_button5_on,
+                       pViewport.topLeft() + (scrollRightOff ? Pointi(408, 188) : Pointi(397, 188)));
+    render->DrawQuad2D(scrollLeftOff ? ui_book_button6_off : ui_book_button6_on,
+                       pViewport.topLeft() + (scrollLeftOff ? Pointi(408, 226) : Pointi(397, 226)));
+    render->DrawQuad2D(ui_exit_cancel_button_background, {471, 445});
 }
 
 //----- (00442955) --------------------------------------------------------

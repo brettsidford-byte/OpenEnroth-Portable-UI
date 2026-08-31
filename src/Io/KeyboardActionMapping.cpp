@@ -8,6 +8,10 @@
 #include "InputEnumFunctions.h"
 #include "InputActionContexts.h"
 
+#ifdef __ANDROID__
+#include "GUI/GUIWindow.h"
+#endif
+
 std::shared_ptr<Io::KeyboardActionMapping> keyboardActionMapping = nullptr;
 
 extern std::unordered_set<InputAction> key_map_conflicted;  // 506E6C
@@ -16,6 +20,25 @@ namespace {
 bool isGamepadKey(PlatformKey key) {
     return key >= PlatformKey::KEY_GAMEPAD_A && key <= PlatformKey::KEY_GAMEPAD_R2;
 }
+
+#ifdef __ANDROID__
+PlatformKey contextualAndroidGamepadKey(InputAction action, PlatformKey configuredKey) {
+    // Face buttons are deliberately reused between gameplay and individual UI
+    // screens. Resolve the overlaps by screen so one physical press cannot
+    // trigger both the world action and a hidden UI action.
+    if (current_screen_type == SCREEN_GAME && action == INPUT_ACTION_OPEN_INVENTORY)
+        return PlatformKey::KEY_NONE;
+
+    if (current_screen_type == SCREEN_MENU) {
+        if (action == INPUT_ACTION_NEW_GAME)
+            return PlatformKey::KEY_NONE;
+        if (action == INPUT_ACTION_OPEN_OPTIONS)
+            return PlatformKey::KEY_GAMEPAD_A;
+    }
+
+    return configuredKey;
+}
+#endif
 }
 
 //----- (00459C8D) --------------------------------------------------------
@@ -37,7 +60,12 @@ PlatformKey Io::KeyboardActionMapping::keyFor(InputAction action) const {
 
 PlatformKey Io::KeyboardActionMapping::gamepadKeyFor(InputAction action) const {
     KeyConfigEntry *entry = valueOr(_gamepadEntryByInputAction, action, nullptr);
-    return entry ? entry->value() : PlatformKey::KEY_NONE;
+    PlatformKey configuredKey = entry ? entry->value() : PlatformKey::KEY_NONE;
+#ifdef __ANDROID__
+    return contextualAndroidGamepadKey(action, configuredKey);
+#else
+    return configuredKey;
+#endif
 }
 
 // TODO(captainurist): maybe we need to split InputActions to sets by WindowType so guarantee of only one InputAction per key is restored.
@@ -46,8 +74,15 @@ bool Io::KeyboardActionMapping::isBound(InputAction action, PlatformKey key) con
         return false;
     if (KeyConfigEntry *entry = valueOr(_keyboardEntryByInputAction, action, nullptr); entry && entry->value() == key)
         return true;
-    if (KeyConfigEntry *entry = valueOr(_gamepadEntryByInputAction, action, nullptr); entry && entry->value() == key)
-        return true;
+    if (KeyConfigEntry *entry = valueOr(_gamepadEntryByInputAction, action, nullptr)) {
+#ifdef __ANDROID__
+        if (contextualAndroidGamepadKey(action, entry->value()) == key)
+            return true;
+#else
+        if (entry->value() == key)
+            return true;
+#endif
+    }
     return false;
 }
 

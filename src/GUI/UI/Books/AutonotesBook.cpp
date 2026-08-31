@@ -76,8 +76,6 @@ GUIWindow_AutonotesBook::GUIWindow_AutonotesBook() : GUIWindow_Book() {
 }
 
 void GUIWindow_AutonotesBook::Update() {
-    render->DrawQuad2D(ui_exit_cancel_button_background, {471, 445});
-
     int pTextHeight;
     bool noteTypeChanged = false;
 
@@ -239,4 +237,17 @@ void GUIWindow_AutonotesBook::Update() {
         render->DrawQuad2D(ui_book_quest_div_bar, {100, autonotes_frameRect.y + pTextHeight + 12});
         autonotes_frameRect.y = (autonotes_frameRect.y + pTextHeight) + 24;
     }
+
+    // Keep the Portable page and Exit controls above the stock book artwork.
+    if ((_bookButtonClicked && _bookButtonAction == BOOK_PREV_PAGE) || !_startingNotesIdx) {
+        render->DrawQuad2D(ui_book_button1_off, pViewport.topLeft() + Pointi(407, 2));
+    } else {
+        render->DrawQuad2D(ui_book_button1_on, pViewport.topLeft() + Pointi(398, 1));
+    }
+    if ((_bookButtonClicked && _bookButtonAction == BOOK_NEXT_PAGE) || (_startingNotesIdx + _currentPageNotes) >= _activeNotesIdx.size()) {
+        render->DrawQuad2D(ui_book_button2_off, pViewport.topLeft() + Pointi(407, 38));
+    } else {
+        render->DrawQuad2D(ui_book_button2_on, pViewport.topLeft() + Pointi(398, 38));
+    }
+    render->DrawQuad2D(ui_exit_cancel_button_background, {471, 445});
 }

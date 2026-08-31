@@ -200,6 +200,11 @@ void GUIWindow_Spellbook::Update() {
             }
         }
     }
+
+    // These controls overlap artwork in the stock spellbook background, so
+    // keep them on the final visible layer.
+    render->DrawQuad2D(ui_spellbook_btn_quckspell, pBtn_InstallRemoveSpell->rect.topLeft());
+    render->DrawQuad2D(ui_spellbook_btn_close, pBtn_CloseBook->rect.topLeft());
 }
 
 GUIWindow_Spellbook::~GUIWindow_Spellbook() {
@@ -234,9 +239,6 @@ void GUIWindow_Spellbook::drawCurrentSchoolBackground() {
         page = pParty->activeCharacter().lastOpenedSpellbookPage;
     }
     render->DrawQuad2D(ui_spellbook_school_backgrounds[page], {8, 8});
-
-    render->DrawQuad2D(ui_spellbook_btn_quckspell, {476, 450});
-    render->DrawQuad2D(ui_spellbook_btn_close, {561, 450});
 }
 
 void GUIWindow_Spellbook::initializeTextures() {

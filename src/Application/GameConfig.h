@@ -394,7 +394,12 @@ class GameConfig : public Config {
         Key DialogRight = {this, INPUT_ACTION_DIALOG_RIGHT, "dialog_right", PlatformKey::KEY_GAMEPAD_RIGHT, "Dialog right key."};
         Key DialogSelect = {this, INPUT_ACTION_DIALOG_PRESS, "dialog_select", PlatformKey::KEY_GAMEPAD_A, "Dialog select key."};
         Key Escape = {this, INPUT_ACTION_ESCAPE, "escape", PlatformKey::KEY_GAMEPAD_B, "Escape key."};
+        Key ToggleMouseLook = {this, INPUT_ACTION_TOGGLE_MOUSE_LOOK, "toggle_mouse_look", PlatformKey::KEY_NONE, "Toggle mouse look key."};
         Key ToggleWindowMode = {this, INPUT_ACTION_TOGGLE_WINDOW_MODE, "toggle_window_mode", PlatformKey::KEY_NONE, "Toggle window mode key."};
+        Key ArcomagePlayCard = {this, INPUT_ACTION_ARCOMAGE_PLAY_CARD, "arcomage_play", PlatformKey::KEY_GAMEPAD_A, "Play currently selected card."};
+        Key ArcomageDiscard = {this, INPUT_ACTION_ARCOMAGE_DISCARD, "arcomage_discard", PlatformKey::KEY_GAMEPAD_Y, "Discard currently selected card."};
+        Key ArcomageLeft = {this, INPUT_ACTION_ARCOMAGE_LEFT, "arcomage_left", PlatformKey::KEY_GAMEPAD_LEFT, "Select next card to left."};
+        Key ArcomageRight = {this, INPUT_ACTION_ARCOMAGE_RIGHT, "arcomage_right", PlatformKey::KEY_GAMEPAD_RIGHT, "Select next card to right."};
     };
 
     Gamepad gamepad{this};

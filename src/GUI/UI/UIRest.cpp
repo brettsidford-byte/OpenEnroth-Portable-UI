@@ -124,6 +124,14 @@ void GUIWindow_Rest::Update() {
         rest_ui_hourglass_frame_current = assets->getImage_ColorKey(fmt::format("hglas{:03}", hourglass_icon_idx));
         render->DrawQuad2D(rest_ui_hourglass_frame_current, {267, 159});
 
+        // The stock controls are baked into restmain. Draw the Portable
+        // replacements after the window background so they remain visible.
+        render->DrawQuad2D(rest_ui_btn_4, pButton_RestUI_Main->rect.topLeft());
+        render->DrawQuad2D(rest_ui_btn_1, pButton_RestUI_WaitUntilDawn->rect.topLeft());
+        render->DrawQuad2D(rest_ui_btn_2, pButton_RestUI_Wait1Hour->rect.topLeft());
+        render->DrawQuad2D(rest_ui_btn_3, pButton_RestUI_Wait5Minutes->rect.topLeft());
+        render->DrawQuad2D(rest_ui_btn_exit, pButton_RestUI_Exit->rect.topLeft());
+
         tmp_button.rect = Recti(24, 154, 171, 37);
         tmp_button.pParent = pButton_RestUI_WaitUntilDawn->pParent;
         tmp_button.DrawLabel(localization->str(LSTR_REST_HEAL_8_HOURS), assets->pFontCreate.get(), colorTable.Diesel, colorTable.StarkWhite);

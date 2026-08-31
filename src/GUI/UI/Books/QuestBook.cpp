@@ -46,8 +46,6 @@ GUIWindow_QuestBook::GUIWindow_QuestBook() {
 }
 
 void GUIWindow_QuestBook::Update() {
-    render->DrawQuad2D(ui_exit_cancel_button_background, {471, 445});
-
     int pTextHeight;
     render->DrawQuad2D(ui_book_quests_background, pViewport.topLeft());
 
@@ -99,4 +97,18 @@ void GUIWindow_QuestBook::Update() {
         render->DrawQuad2D(ui_book_quest_div_bar, {100, (questbook_window.y + pTextHeight) + 12});
         questbook_window.y = (questbook_window.y + pTextHeight) + 24;
     }
+
+    // Repaint Portable controls after all book content. The original controls
+    // are part of the book artwork and must not cover these replacements.
+    if ((_bookButtonClicked && _bookButtonAction == BOOK_PREV_PAGE) || !_startingQuestIdx) {
+        render->DrawQuad2D(ui_book_button1_off, pViewport.topLeft() + Pointi(407, 2));
+    } else {
+        render->DrawQuad2D(ui_book_button1_on, pViewport.topLeft() + Pointi(398, 1));
+    }
+    if ((_bookButtonClicked && _bookButtonAction == BOOK_NEXT_PAGE) || (_startingQuestIdx + _currentPageQuests) >= _activeQuestsIdx.size()) {
+        render->DrawQuad2D(ui_book_button2_off, pViewport.topLeft() + Pointi(407, 38));
+    } else {
+        render->DrawQuad2D(ui_book_button2_on, pViewport.topLeft() + Pointi(398, 38));
+    }
+    render->DrawQuad2D(ui_exit_cancel_button_background, {471, 445});
 }
