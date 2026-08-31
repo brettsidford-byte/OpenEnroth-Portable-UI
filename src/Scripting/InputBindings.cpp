@@ -118,6 +118,7 @@ void InputBindings::_fillTableWithEnums(sol::table &table) const {
         "KEY_GAMEPAD_L3", PlatformKey::KEY_GAMEPAD_L3,
         "KEY_GAMEPAD_R3", PlatformKey::KEY_GAMEPAD_R3,
         "KEY_GAMEPAD_START", PlatformKey::KEY_GAMEPAD_START,
+        "KEY_GAMEPAD_SELECT", PlatformKey::KEY_GAMEPAD_SELECT,
         "KEY_GAMEPAD_BACK", PlatformKey::KEY_GAMEPAD_BACK,
         "KEY_GAMEPAD_GUIDE", PlatformKey::KEY_GAMEPAD_GUIDE,
         "KEY_GAMEPAD_TOUCHPAD", PlatformKey::KEY_GAMEPAD_TOUCHPAD,

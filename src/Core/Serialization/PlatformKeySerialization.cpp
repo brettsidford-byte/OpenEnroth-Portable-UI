@@ -127,6 +127,7 @@ MM_DEFINE_ENUM_SERIALIZATION_FUNCTIONS(PlatformKey, CASE_INSENSITIVE, {
     {PlatformKey::KEY_GAMEPAD_L3,       "L3"},
     {PlatformKey::KEY_GAMEPAD_R3,       "R3"},
     {PlatformKey::KEY_GAMEPAD_START,    "START"},
+    {PlatformKey::KEY_GAMEPAD_SELECT,   "SELECT"},
     {PlatformKey::KEY_GAMEPAD_BACK,     "BACK"},
     {PlatformKey::KEY_GAMEPAD_GUIDE,    "GUIDE"},
     {PlatformKey::KEY_GAMEPAD_TOUCHPAD, "TOUCHPAD"},

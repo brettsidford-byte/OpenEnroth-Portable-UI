@@ -101,6 +101,9 @@ PlatformKey translateSdlKey(SDL_Keycode key) {
     case SDLK_PAGEDOWN:         return PlatformKey::KEY_PAGEDOWN;
     case SDLK_DELETE:           return PlatformKey::KEY_DELETE;
     case SDLK_SELECT:           return PlatformKey::KEY_SELECT;
+#ifdef __ANDROID__
+    case SDLK_AC_BACK:          return PlatformKey::KEY_GAMEPAD_BACK;
+#endif
 
     case SDLK_LCTRL:            return PlatformKey::KEY_CONTROL;
     case SDLK_RCTRL:            return PlatformKey::KEY_CONTROL;
@@ -143,7 +146,14 @@ PlatformKey translateSdlGamepadButton(SDL_GamepadButton button) {
     case SDL_GAMEPAD_BUTTON_RIGHT_STICK:    return PlatformKey::KEY_GAMEPAD_R3;
 
     case SDL_GAMEPAD_BUTTON_START:          return PlatformKey::KEY_GAMEPAD_START;
+#ifdef __ANDROID__
+    // Android's SDL backend merges BTN_SELECT and KEY_BACK into this slot.
+    // OpenEnroth.java diverts KEY_BACK to SDLK_AC_BACK, leaving this event as
+    // the RG405V's independent Select button.
+    case SDL_GAMEPAD_BUTTON_BACK:           return PlatformKey::KEY_GAMEPAD_SELECT;
+#else
     case SDL_GAMEPAD_BUTTON_BACK:           return PlatformKey::KEY_GAMEPAD_BACK;
+#endif
 
     case SDL_GAMEPAD_BUTTON_GUIDE:          return PlatformKey::KEY_GAMEPAD_GUIDE;
 
