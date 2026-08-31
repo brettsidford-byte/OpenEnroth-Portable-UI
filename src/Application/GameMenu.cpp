@@ -92,6 +92,12 @@ Menu::Menu() {
 Menu::~Menu() = default;
 
 void Menu::EventLoop() {
+    // A controller can map more than one physical button to the same menu action.
+    // If both buttons are pressed together, two identical messages can arrive in
+    // this update. Do not let the second message immediately consume the
+    // confirmation that the first message has just armed.
+    const CurrentConfirmationState confirmationAtLoopStart = confirmationState;
+
     while (engine->_messageQueue->haveMessages()) {
         UIMessageType msg;
         int param, param2;
@@ -99,9 +105,13 @@ void Menu::EventLoop() {
 
         switch (msg) {
             case UIMSG_StartNewGame:
+                if (confirmationState == CONFIRM_NEW_GAME && confirmationAtLoopStart != CONFIRM_NEW_GAME)
+                    continue;
                 Game_StartNewGameWhilePlaying(param);
                 continue;
             case UIMSG_Quit:
+                if (confirmationState == CONFIRM_QUIT && confirmationAtLoopStart != CONFIRM_QUIT)
+                    continue;
                 Game_QuitGameWhilePlaying(param);
                 continue;
             case UIMSG_Game_OpenLoadGameDialog:

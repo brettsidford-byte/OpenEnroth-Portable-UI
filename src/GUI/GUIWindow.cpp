@@ -611,11 +611,11 @@ void SetUserInterface(PartyAlignment align) {
         game_ui_btn_zoomin = assets->getImage_ColorKey("ib-autout-C");
         game_ui_btn_zoomout = assets->getImage_ColorKey("ib-autin-C");
         game_ui_player_selection_frame = assets->getImage_ColorKey("IB-selec-C");
-        game_ui_btn_cast = assets->getImage_Alpha("ib-m1d-c");
-        game_ui_btn_rest = assets->getImage_Alpha("ib-m2d-c");
-        game_ui_btn_quickref = assets->getImage_Alpha("ib-m3d-c");
-        game_ui_btn_settings = assets->getImage_Alpha("ib-m4d-c");
-        ui_exit_cancel_button_background = assets->getImage_ColorKey("ib-bcu-c");
+        game_ui_btn_cast = assets->getImage_Png("images/portable_ui/portable_hud_cast_c.png");
+        game_ui_btn_rest = assets->getImage_Png("images/portable_ui/portable_hud_rest_c.png");
+        game_ui_btn_quickref = assets->getImage_Png("images/portable_ui/portable_hud_quickref_c.png");
+        game_ui_btn_settings = assets->getImage_Png("images/portable_ui/portable_hud_options_c.png");
+        ui_exit_cancel_button_background = assets->getImage_Png("images/portable_ui/portable_ib_bcu_c.png");
 
         game_ui_playerbuff_bless = assets->getImage_ColorKey("isg-01-c");
         game_ui_playerbuff_preservation = assets->getImage_ColorKey("isg-02-c");
@@ -658,13 +658,13 @@ void SetUserInterface(PartyAlignment align) {
         ui_btn_npc_left = assets->getImage_ColorKey("IB-NPCLD-A");
         ui_btn_npc_right = assets->getImage_ColorKey("IB-NPCRD-A");
         game_ui_player_selection_frame = assets->getImage_ColorKey("IB-selec-A");
-        game_ui_btn_cast = assets->getImage_Alpha("ib-m1d-a");
-        game_ui_btn_rest = assets->getImage_Alpha("ib-m2d-a");
-        game_ui_btn_quickref = assets->getImage_Alpha("ib-m3d-a");
-        game_ui_btn_settings = assets->getImage_Alpha("ib-m4d-a");
+        game_ui_btn_cast = assets->getImage_Png("images/portable_ui/portable_hud_cast_a.png");
+        game_ui_btn_rest = assets->getImage_Png("images/portable_ui/portable_hud_rest_a.png");
+        game_ui_btn_quickref = assets->getImage_Png("images/portable_ui/portable_hud_quickref_a.png");
+        game_ui_btn_settings = assets->getImage_Png("images/portable_ui/portable_hud_options_a.png");
         game_ui_btn_zoomin = assets->getImage_ColorKey("ib-autout-a");
         game_ui_btn_zoomout = assets->getImage_ColorKey("ib-autin-a");
-        ui_exit_cancel_button_background = assets->getImage_ColorKey("ib-bcu-a");
+        ui_exit_cancel_button_background = assets->getImage_Png("images/portable_ui/portable_ib_bcu_a.png");
 
         game_ui_playerbuff_bless = assets->getImage_ColorKey("isg-01-a");
         game_ui_playerbuff_preservation = assets->getImage_ColorKey("isg-02-a");
@@ -709,11 +709,11 @@ void SetUserInterface(PartyAlignment align) {
         game_ui_btn_zoomin = assets->getImage_ColorKey("ib-autout-B");
         game_ui_btn_zoomout = assets->getImage_ColorKey("ib-autin-B");
         game_ui_player_selection_frame = assets->getImage_ColorKey("IB-selec-B");
-        game_ui_btn_cast = assets->getImage_Alpha("ib-m1d-b");
-        game_ui_btn_rest = assets->getImage_Alpha("ib-m2d-b");
-        game_ui_btn_quickref = assets->getImage_Alpha("ib-m3d-b");
-        game_ui_btn_settings = assets->getImage_Alpha("ib-m4d-b");
-        ui_exit_cancel_button_background = assets->getImage_ColorKey("ib-bcu-b");
+        game_ui_btn_cast = assets->getImage_Png("images/portable_ui/portable_hud_cast_b.png");
+        game_ui_btn_rest = assets->getImage_Png("images/portable_ui/portable_hud_rest_b.png");
+        game_ui_btn_quickref = assets->getImage_Png("images/portable_ui/portable_hud_quickref_b.png");
+        game_ui_btn_settings = assets->getImage_Png("images/portable_ui/portable_hud_options_b.png");
+        ui_exit_cancel_button_background = assets->getImage_Png("images/portable_ui/portable_ib_bcu_b.png");
 
         game_ui_playerbuff_bless = assets->getImage_ColorKey("isg-01-b");
         game_ui_playerbuff_preservation = assets->getImage_ColorKey("isg-02-b");

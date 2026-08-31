@@ -242,8 +242,8 @@ void GUIWindow_Spellbook::drawCurrentSchoolBackground() {
 void GUIWindow_Spellbook::initializeTextures() {
     pAudioPlayer->playUISound(SOUND_openbook);
 
-    ui_spellbook_btn_close = assets->getImage_Solid("ib-m5-u");
-    ui_spellbook_btn_close_click = assets->getImage_Solid("ib-m5-d");
+    ui_spellbook_btn_close = assets->getImage_Png("images/portable_ui/portable_ib_m5_u.png");
+    ui_spellbook_btn_close_click = assets->getImage_Png("images/portable_ui/portable_ib_m5_d.png");
     ui_spellbook_btn_quckspell = assets->getImage_Solid("ib-m6-u");
     ui_spellbook_btn_quckspell_click = assets->getImage_Solid("ib-m6-d");
 
