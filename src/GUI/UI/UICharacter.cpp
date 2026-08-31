@@ -639,7 +639,6 @@ void GUIWindow_CharacterRecord::Update() {
             CharacterUI_ReleaseButtons();
             releaseAwardsScrollBar();
             CharacterUI_StatsTab_Draw(player);
-            render->DrawQuad2D(assets->getImage_Png("images/portable_ui/portable_ib_cd1_d.png"), pCharacterScreen_StatsBtn->rect.topLeft());
             break;
         }
         case WINDOW_CharacterWindow_Skills: {
@@ -649,21 +648,18 @@ void GUIWindow_CharacterRecord::Update() {
             }
             releaseAwardsScrollBar();
             CharacterUI_SkillsTab_Draw(player);
-            render->DrawQuad2D(assets->getImage_Png("images/portable_ui/portable_ib_cd2_d.png"), pCharacterScreen_SkillsBtn->rect.topLeft());
             break;
         }
         case WINDOW_CharacterWindow_Awards: {
             CharacterUI_ReleaseButtons();
             createAwardsScrollBar();
             CharacterUI_AwardsTab_Draw(player);
-            render->DrawQuad2D(assets->getImage_Png("images/portable_ui/portable_ib_cd4_d.png"), pCharacterScreen_AwardsBtn->rect.topLeft());
             break;
         }
         case WINDOW_CharacterWindow_Inventory: {
             CharacterUI_ReleaseButtons();
             releaseAwardsScrollBar();
             CharacterUI_InventoryTab_Draw(player, false);
-            render->DrawQuad2D(assets->getImage_Png("images/portable_ui/portable_ib_cd3_d.png"), pCharacterScreen_InventoryBtn->rect.topLeft());
             break;
         }
         default:
@@ -675,6 +671,36 @@ void GUIWindow_CharacterRecord::Update() {
         CharacterUI_DrawPaperdollWithRingOverlay(player);
     else
         CharacterUI_DrawPaperdoll(player);
+
+    // Character backgrounds contain the original tab artwork. Repaint every
+    // released Portable button after the complete screen (including the
+    // paperdoll) has been drawn, then place the active tab's pressed state on
+    // the final layer.
+    render->DrawQuad2D(paperdoll_dbrds[10], pCharacterScreen_StatsBtn->rect.topLeft());
+    render->DrawQuad2D(paperdoll_dbrds[8], pCharacterScreen_SkillsBtn->rect.topLeft());
+    render->DrawQuad2D(paperdoll_dbrds[6], pCharacterScreen_InventoryBtn->rect.topLeft());
+    render->DrawQuad2D(paperdoll_dbrds[4], pCharacterScreen_AwardsBtn->rect.topLeft());
+    render->DrawQuad2D(paperdoll_dbrds[2], pCharacterScreen_ExitBtn->rect.topLeft());
+
+    GUIButton *activeTabButton = nullptr;
+    switch (current_character_screen_window) {
+        case WINDOW_CharacterWindow_Stats:
+            activeTabButton = pCharacterScreen_StatsBtn;
+            break;
+        case WINDOW_CharacterWindow_Skills:
+            activeTabButton = pCharacterScreen_SkillsBtn;
+            break;
+        case WINDOW_CharacterWindow_Inventory:
+            activeTabButton = pCharacterScreen_InventoryBtn;
+            break;
+        case WINDOW_CharacterWindow_Awards:
+            activeTabButton = pCharacterScreen_AwardsBtn;
+            break;
+        default:
+            assert(false);
+            break;
+    }
+    render->DrawQuad2D(activeTabButton->vTextures[1], activeTabButton->rect.topLeft());
 }
 
 void GUIWindow_CharacterRecord::ShowStatsTab() {

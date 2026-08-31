@@ -270,11 +270,13 @@ GUIWindow_Save::GUIWindow_Save() : GUIWindow_SaveLoad(WINDOW_Save, {0, 0}, rende
 void GUIWindow_Save::Update() {
     if (GetCurrentMenuID() != MENU_SAVELOAD && GetCurrentMenuID() != MENU_LoadingProcInMainMenu) {
         render->DrawQuad2D(saveload_ui_loadsave, {8, 8});
-        render->DrawQuad2D(saveload_ui_saveu, {241, 302});
         render->DrawQuad2D(saveload_ui_save_up, {18, 139});
-        render->DrawQuad2D(saveload_ui_x_u, {351, 302});
     }
     drawSaveLoad();
+    // The original Save/Cancel controls are part of the menu background.
+    // Repaint the Portable controls last in both in-game and main-menu modes.
+    render->DrawQuad2D(saveload_ui_saveu, {241, 302});
+    render->DrawQuad2D(saveload_ui_x_u, pBtnCancel->rect.topLeft());
 }
 
 void GUIWindow_Save::slotClicked(int slotIndex, bool isDoubleClick) {
@@ -307,7 +309,7 @@ GUIWindow_Load::GUIWindow_Load(bool ingame) : GUIWindow_SaveLoad(WINDOW_Load, {0
         render->DrawQuad2D(saveload_ui_loadsave, {8, 8});
         render->DrawQuad2D(saveload_ui_loadu, {241, 302});
         render->DrawQuad2D(saveload_ui_load_up, {18, 139});
-        render->DrawQuad2D(saveload_ui_x_u, {351, 302});
+        render->DrawQuad2D(saveload_ui_x_u, {350, 302});
     }
 
     this->frameRect = Recti(saveload_dlg_xs[ingame ? 1 : 0], saveload_dlg_ys[ingame ? 1 : 0],
@@ -350,11 +352,13 @@ void GUIWindow_Load::Update() {
     }
     if (GetCurrentMenuID() != MENU_SAVELOAD && GetCurrentMenuID() != MENU_LoadingProcInMainMenu) {
         render->DrawQuad2D(saveload_ui_loadsave, {8, 8});
-        render->DrawQuad2D(saveload_ui_loadu, {241, 302});
         render->DrawQuad2D(saveload_ui_load_up, {18, 139});
-        render->DrawQuad2D(saveload_ui_x_u, {351, 302});
     }
     drawSaveLoad();
+    // The original Load/Cancel controls are part of the menu background.
+    // Repaint the Portable controls last in both in-game and main-menu modes.
+    render->DrawQuad2D(saveload_ui_loadu, {241, 302});
+    render->DrawQuad2D(saveload_ui_x_u, pBtnCancel->rect.topLeft());
 }
 
 void GUIWindow_Load::slotClicked(int slotIndex, bool isDoubleClick) {

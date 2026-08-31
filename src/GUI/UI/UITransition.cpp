@@ -110,8 +110,8 @@ void GUIWindow_Travel::Update() {
     render->DrawQuad2D(game_ui_dialogue_background, {477, 0});
     render->DrawQuad2D(game_ui_right_panel_frame, {468, 0});
     render->DrawQuad2D(transition_ui_icon, {pNPCPortraits_x[0][0], pNPCPortraits_y[0][0]});
-    render->DrawQuad2D(dialogue_ui_x_x_u, {556, 451});
-    render->DrawQuad2D(dialogue_ui_x_ok_u, {476, 451});
+    render->DrawQuad2D(dialogue_ui_x_x_u, pBtn_ExitCancel->rect.topLeft());
+    render->DrawQuad2D(dialogue_ui_x_ok_u, pBtn_YES->rect.topLeft());
     if (destinationMap != MAP_INVALID) {
         Recti travel_window = pPrimaryWindow->frameRect;
         travel_window.x = 493;
@@ -185,8 +185,8 @@ void GUIWindow_IndoorEntryExit::Update() {
     render->DrawQuad2D(game_ui_evtnpc, {pNPCPortraits_x[0][0] - 4, pNPCPortraits_y[0][0] - 4});
     render->DrawQuad2D(transition_ui_icon, {pNPCPortraits_x[0][0], pNPCPortraits_y[0][0]});
     render->DrawQuad2D(game_ui_right_panel_frame, {468, 0});
-    render->DrawQuad2D(dialogue_ui_x_x_u, {556, 451});
-    render->DrawQuad2D(dialogue_ui_x_ok_u, {476, 451});
+    render->DrawQuad2D(dialogue_ui_x_x_u, pBtn_ExitCancel->rect.topLeft());
+    render->DrawQuad2D(dialogue_ui_x_ok_u, pBtn_YES->rect.topLeft());
 
     MapId map_id = engine->_currentLoadedMapId;
     if (pMovie_Track || getSpecialTransferMessageIndex(_mapName)) {

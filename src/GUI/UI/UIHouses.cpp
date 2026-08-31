@@ -937,8 +937,8 @@ void GUIWindow_House::houseDialogManager() {
         houseSpecificDialogue();
     }
     if (currentHouseNpc != -1 && houseNpcs[currentHouseNpc].type == HOUSE_TRANSITION) {
-        render->DrawQuad2D(dialogue_ui_x_x_u, {556, 451});
-        render->DrawQuad2D(dialogue_ui_x_ok_u, {476, 451});
+        render->DrawQuad2D(dialogue_ui_x_x_u, pBtn_ExitCancel->rect.topLeft());
+        render->DrawQuad2D(dialogue_ui_x_ok_u, pBtn_YES->rect.topLeft());
     } else {
         render->DrawQuad2D(ui_exit_cancel_button_background, {471, 445});
     }
