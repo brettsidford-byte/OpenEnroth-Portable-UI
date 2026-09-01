@@ -48,7 +48,9 @@ jobs:
         with:
           build-root-directory: android
           job-id: android-Debug
-          arguments: assembleDebug --info -Pandroid.native.buildOutput=verbose
+          # The cache can restore generated Android resources from an earlier Gradle configuration. Clean first so
+          # removed resValue entries cannot survive and collide with current source-set resources.
+          arguments: clean assembleDebug --info -Pandroid.native.buildOutput=verbose
           read-only: true
         env:
           CMAKE_BUILD_PARALLEL_LEVEL: 4
