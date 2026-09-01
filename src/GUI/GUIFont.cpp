@@ -43,11 +43,11 @@ std::unique_ptr<GUIFont> GUIFont::LoadFont(std::string_view pFontFile) {
     result->_font = lod::decodeFont(pIcons_LOD->LoadCompressedTexture(pFontFile));
 
     if (pFontFile == "lucida.fnt") {
-        result->_readableFont = lod::decodeFont(ufs->read("images/portable_ui/portable_lucida_readable.fnt"));
+        result->_readableFont = lod::decodeFont(dfs->read("images/portable_ui/portable_lucida_readable.fnt"));
     } else if (pFontFile == "smallnum.fnt") {
-        result->_readableFont = lod::decodeFont(ufs->read("images/portable_ui/portable_smallnum_readable.fnt"));
+        result->_readableFont = lod::decodeFont(dfs->read("images/portable_ui/portable_smallnum_readable.fnt"));
     } else if (pFontFile == "create.fnt") {
-        result->_readableFont = lod::decodeFont(ufs->read("images/portable_ui/portable_create_readable.fnt"));
+        result->_readableFont = lod::decodeFont(dfs->read("images/portable_ui/portable_create_readable.fnt"));
     }
     result->CreateFontTex();
 
