@@ -498,7 +498,7 @@ void OptionsMenuSkin::Release() {
 
 GUIWindow_GameOptions::GUIWindow_GameOptions()
     : GUIWindow(WINDOW_GameOptions, {0, 0}, render->GetRenderDimensions()) {
-    options_menu_skin.uTextureID_Background = assets->getImage_ColorKey("ControlBG");
+    options_menu_skin.uTextureID_Background = assets->getImage_Png("images/portable_ui/portable_controlbg.png");
     options_menu_skin.uTextureID_TurnSpeed[2] = assets->getImage_Png("images/portable_ui/portable_16x.png");
     options_menu_skin.uTextureID_TurnSpeed[1] = assets->getImage_Png("images/portable_ui/portable_32x.png");
     options_menu_skin.uTextureID_TurnSpeed[0] = assets->getImage_Png("images/portable_ui/portable_smooth.png");
@@ -567,14 +567,6 @@ void GUIWindow_GameOptions::Update() {
     render->DrawQuad2D(options_menu_skin.uTextureID_Keyboard, {19, 140});
     render->DrawQuad2D(options_menu_skin.uTextureID_Video, {19, 194});
     render->DrawQuad2D(options_menu_skin.uTextureID_Return, {241, 302});
-    render->DrawQuad2D(options_menu_skin.uTextureID_TurnSpeed[2], {22, 270});
-    render->DrawQuad2D(options_menu_skin.uTextureID_TurnSpeed[1], {93, 270});
-    render->DrawQuad2D(options_menu_skin.uTextureID_TurnSpeed[0], {164, 270});
-    render->DrawQuad2D(options_menu_skin.uTextureID_WalkSound, {20, 303});
-    render->DrawQuad2D(options_menu_skin.uTextureID_ShowDamage, {128, 303});
-    render->DrawQuad2D(options_menu_skin.uTextureID_AlwaysRun, {20, 325});
-    render->DrawQuad2D(options_menu_skin.uTextureID_FlipOnExit, {128, 325});
-
     switch ((int) engine->config->settings.TurnSpeed.value()) {
         case 64:
             render->DrawQuad2D(options_menu_skin.uTextureID_TurnSpeed[1], {BtnTurnCoord[1], 270});
