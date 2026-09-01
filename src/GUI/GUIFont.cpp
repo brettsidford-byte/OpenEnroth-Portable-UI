@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "Engine/Resources/LodTextureCache.h"
+#include "Engine/Resources/EngineFileSystem.h"
 
 #include "Engine/Graphics/Renderer/Renderer.h"
 #include "Engine/Graphics/Image.h"
@@ -40,6 +41,12 @@ std::unique_ptr<GUIFont> GUIFont::LoadFont(std::string_view pFontFile) {
     std::unique_ptr<GUIFont> result = std::make_unique<GUIFont>();
 
     result->_font = lod::decodeFont(pIcons_LOD->LoadCompressedTexture(pFontFile));
+
+    if (pFontFile == "lucida.fnt") {
+        result->_readableFont = lod::decodeFont(ufs->read("images/portable_ui/portable_lucida_readable.fnt"));
+    } else if (pFontFile == "smallnum.fnt") {
+        result->_readableFont = lod::decodeFont(ufs->read("images/portable_ui/portable_smallnum_readable.fnt"));
+    }
     result->CreateFontTex();
 
     return result;
@@ -53,29 +60,19 @@ void GUIFont::CreateFontTex() {
 
     RgbaImage pixels = RgbaImage::solid(Color(), _layout.geometry().size());
 
+    const LodFont &font = _readableFontEnabled && _readableFont ? *_readableFont : _font;
+
     // Pack per-channel color weights: R is for text, G is for shadow, B & A are reserved for multi-color fonts
     // (MM3 fonts use 4 colors and we will import them eventually).
     for (size_t l = 0; l < _layout.size(); l++) {
         Recti cell = _layout[l];
-        GrayscaleImageView image = _font.image(l);
+        GrayscaleImageView image = font.image(l);
 
         for (int y = 0; y < image.height(); y++)
             for (int x = 0; x < image.width(); x++)
                 if (uint8_t pixel = image[y][x])
                     pixels[cell.y + y][cell.x + x] = pixel == 1 ? Color(0, 255, 0, 0) : Color(255, 0, 0, 0);
 
-        if (_readableFontEnabled) {
-            // Add a softer pixel to the right of each foreground pixel. This slightly increases stroke weight while
-            // preserving every glyph's original width, spacing, height and line-wrapping metrics.
-            for (int y = 0; y < image.height(); ++y) {
-                for (int x = image.width() - 2; x >= 0; --x) {
-                    const Color &source = pixels[cell.y + y][cell.x + x];
-                    Color &target = pixels[cell.y + y][cell.x + x + 1];
-                    if (source.r && !target.r && !target.g)
-                        target = Color(176, 0, 0, 0);
-                }
-            }
-        }
     }
 
     _texture = GraphicsImage::Create(std::move(pixels));

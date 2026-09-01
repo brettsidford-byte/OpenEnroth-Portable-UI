@@ -2,6 +2,7 @@
 
 #include <string>
 #include <memory>
+#include <optional>
 
 #include "Engine/Graphics/AtlasLayout.h"
 
@@ -109,6 +110,7 @@ class GUIFont {
 
  private:
     LodFont _font;
+    std::optional<LodFont> _readableFont;
     AtlasLayout _layout;
     GraphicsImage *_texture = nullptr;
 
