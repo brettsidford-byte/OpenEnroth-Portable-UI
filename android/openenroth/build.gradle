@@ -87,6 +87,13 @@ androidConfig.with {
         }
     }
     buildTypes {
+        debug {
+            // Keep development builds completely separate from the signed release app so both can be installed at
+            // once. The Java namespace intentionally stays unchanged; applicationId controls Android app identity.
+            applicationIdSuffix ".uitest"
+            versionNameSuffix "-ui-test"
+            resValue "string", "app_name", "Open Enroth UI Test"
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

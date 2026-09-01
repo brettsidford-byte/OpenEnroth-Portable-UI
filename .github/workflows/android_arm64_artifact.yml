@@ -55,8 +55,16 @@ jobs:
           GITHUBARCH: arm64-v8a
 
       - name: Verify APK
+        shell: bash
         run: |
-          ls -lh android/openenroth/build/outputs/apk/debug/openenroth-debug.apk
+          APK=android/openenroth/build/outputs/apk/debug/openenroth-debug.apk
+          test -f "$APK"
+          AAPT="$(find "$ANDROID_HOME/build-tools" -type f -name aapt | sort -V | tail -1)"
+          test -n "$AAPT"
+          PACKAGE="$($AAPT dump badging "$APK" | sed -n "s/^package: name='\([^']*\)'.*/\1/p")"
+          test "$PACKAGE" = "org.openenroth.game.uitest"
+          echo "Verified test application ID: $PACKAGE"
+          ls -lh "$APK"
 
       - name: Upload ARM64 test APK
         uses: actions/upload-artifact@v4
