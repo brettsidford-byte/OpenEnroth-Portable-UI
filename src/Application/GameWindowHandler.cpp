@@ -288,6 +288,15 @@ void GameWindowHandler::OnKey(PlatformKey key) {
     if (!keyboardInputHandler || !keyboardActionMapping)
         return;
 
+    // Binding capture must take precedence over every action, including the
+    // global/system actions below. Otherwise a button already assigned to a
+    // global action fires immediately and can never be captured for a new
+    // assignment in the controls screen.
+    if (currently_selected_action_for_binding != INPUT_ACTION_INVALID) {
+        keyboardInputHandler->ProcessTextInput(key, -1);
+        return;
+    }
+
     // TODO: many of hardcoded keys below should be moved out of there and made configurable
     if (keyboardActionMapping->isBound(INPUT_ACTION_TAKE_SCREENSHOT, key)) {
         OnScreenshot();
@@ -301,10 +310,7 @@ void GameWindowHandler::OnKey(PlatformKey key) {
         return;
     }
 
-    if (currently_selected_action_for_binding != INPUT_ACTION_INVALID) {
-        // we're setting a key binding in options
-        keyboardInputHandler->ProcessTextInput(key, -1);
-    } else if (pArcomageGame->_gameInProgress) {
+    if (pArcomageGame->_gameInProgress) {
         if (keyboardActionMapping->isBound(INPUT_ACTION_TOGGLE_WINDOW_MODE, key) && !pMovie_Track) {
             OnToggleWindowMode();
         } else {

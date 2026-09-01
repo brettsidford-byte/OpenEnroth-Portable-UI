@@ -22,3 +22,14 @@ if(ANDROID)
     target_link_libraries(io PRIVATE SDL3::SDL3OE)
 endif()
 target_check_style(io)
+
+if(OE_BUILD_TESTS)
+    set(TEST_IO_SOURCES Tests/InputEnumFunctions_ut.cpp)
+
+    add_library(test_io OBJECT ${TEST_IO_SOURCES})
+    target_link_libraries(test_io PUBLIC testing_unit io)
+
+    target_check_style(test_io)
+
+    target_link_libraries(OpenEnroth_UnitTest PUBLIC test_io)
+endif()
