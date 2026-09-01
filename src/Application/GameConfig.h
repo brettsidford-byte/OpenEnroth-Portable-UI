@@ -421,7 +421,7 @@ class GameConfig : public Config {
 
         Bool ColoredLights = {this, "colored_lights", true, "Enable colored lights."};
 
-        Bool ReadableFont = {this, "readable_font", false, "Slightly increase bitmap font stroke weight."};
+        Bool ReadableFont = {this, "readable_font", false, "Use remastered small bitmap fonts for improved readability."};
 
         Bool Fog = {this, "fog", true, "Enable fog effect. Used at far clip and in foggy weather."};
 
