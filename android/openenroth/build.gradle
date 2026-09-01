@@ -92,7 +92,6 @@ androidConfig.with {
             // once. The Java namespace intentionally stays unchanged; applicationId controls Android app identity.
             applicationIdSuffix ".uitest"
             versionNameSuffix "-ui-test"
-            resValue "string", "app_name", "Open Enroth UI Test"
         }
         release {
             minifyEnabled false
