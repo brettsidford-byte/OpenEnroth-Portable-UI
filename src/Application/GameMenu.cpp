@@ -24,6 +24,7 @@
 #include "Io/KeyboardInputHandler.h"
 
 #include "GUI/GUIButton.h"
+#include "GUI/GUIFont.h"
 #include "GUI/GUIMessageQueue.h"
 #include "GUI/UI/UIGame.h"
 #include "GUI/UI/UISaveLoad.h"
@@ -274,8 +275,10 @@ void Menu::EventLoop() {
             case UIMSG_ToggleBloodsplats:
                 engine->config->graphics.BloodSplats.toggle();
                 continue;
-            case UIMSG_ToggleColoredLights:
-                engine->config->graphics.ColoredLights.toggle();
+            case UIMSG_ToggleReadableFont:
+                engine->config->graphics.ReadableFont.toggle();
+                GUIFont::setReadableFontEnabled(engine->config->graphics.ReadableFont.value());
+                assets->reloadFonts();
                 continue;
             case UIMSG_ToggleTint:
                 engine->config->graphics.Tinting.toggle();

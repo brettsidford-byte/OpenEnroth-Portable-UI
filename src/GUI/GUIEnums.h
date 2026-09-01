@@ -203,7 +203,7 @@ enum UIMessageType : uint32_t {
 
     UIMSG_OpenVideoOptions = 421,
     UIMSG_ToggleBloodsplats = 422,
-    UIMSG_ToggleColoredLights = 423,
+    UIMSG_ToggleReadableFont = 423,
     UIMSG_ToggleTint = 424,
     UIMSG_ChangeGammaLevel = 425,
 

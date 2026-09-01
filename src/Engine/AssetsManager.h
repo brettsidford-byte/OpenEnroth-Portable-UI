@@ -14,6 +14,7 @@ class AssetsManager {
     AssetsManager() {}
 
     void releaseAllTextures();
+    void reloadFonts();
 
     // TODO(captainurist): These are called back from GraphicsImage::Release, which is a questionable design.
     bool releaseImage(std::string_view name);

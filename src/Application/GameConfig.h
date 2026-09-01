@@ -421,6 +421,8 @@ class GameConfig : public Config {
 
         Bool ColoredLights = {this, "colored_lights", true, "Enable colored lights."};
 
+        Bool ReadableFont = {this, "readable_font", false, "Slightly increase bitmap font stroke weight."};
+
         Bool Fog = {this, "fog", true, "Enable fog effect. Used at far clip and in foggy weather."};
 
         Int FogHorizon = {this, "fog_horizon", 39, "Fog height for bottom sky horizon."};

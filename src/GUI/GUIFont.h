@@ -30,6 +30,8 @@ class GUIFont {
 
     static std::unique_ptr<GUIFont> LoadFont(std::string_view pFontFile);
 
+    static void setReadableFontEnabled(bool enabled);
+
     void CreateFontTex();
     void ReleaseFontTex();
 
@@ -109,5 +111,6 @@ class GUIFont {
     LodFont _font;
     AtlasLayout _layout;
     GraphicsImage *_texture = nullptr;
-};
 
+    static bool _readableFontEnabled;
+};

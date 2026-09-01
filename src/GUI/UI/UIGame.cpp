@@ -139,10 +139,10 @@ GraphicsImage *game_ui_dialogue_background = nullptr;
 
 GraphicsImage *game_ui_menu_options_video_background = nullptr;
 GraphicsImage *game_ui_menu_options_video_bloodsplats = nullptr;
-GraphicsImage *game_ui_menu_options_video_coloredlights = nullptr;
+GraphicsImage *game_ui_menu_options_video_readablefont = nullptr;
 GraphicsImage *game_ui_menu_options_video_tinting = nullptr;
 GraphicsImage *game_ui_menu_options_video_bloodsplats_selected = nullptr;
-GraphicsImage *game_ui_menu_options_video_coloredlights_selected = nullptr;
+GraphicsImage *game_ui_menu_options_video_readablefont_selected = nullptr;
 GraphicsImage *game_ui_menu_options_video_tinting_selected = nullptr;
 GraphicsImage *game_ui_menu_options_video_return = nullptr;
 std::array<GraphicsImage *, 10> game_ui_menu_options_video_gamma_positions;
@@ -389,10 +389,10 @@ GUIWindow_GameVideoOptions::GUIWindow_GameVideoOptions()
     // GameMenuUI_OptionsVideo_Load --- part
     game_ui_menu_options_video_background = assets->getImage_ColorKey("optvid");
     game_ui_menu_options_video_bloodsplats = assets->getImage_Png("images/portable_ui/portable_blood_splats.png");
-    game_ui_menu_options_video_coloredlights = assets->getImage_Png("images/portable_ui/portable_colored_lights.png");
+    game_ui_menu_options_video_readablefont = assets->getImage_Png("images/portable_ui/portable_readable_font.png");
     game_ui_menu_options_video_tinting = assets->getImage_Png("images/portable_ui/portable_tinting.png");
     game_ui_menu_options_video_bloodsplats_selected = assets->getImage_Png("images/portable_ui/portable_blood_splats_hover.png");
-    game_ui_menu_options_video_coloredlights_selected = assets->getImage_Png("images/portable_ui/portable_colored_lights_hover.png");
+    game_ui_menu_options_video_readablefont_selected = assets->getImage_Png("images/portable_ui/portable_readable_font_hover.png");
     game_ui_menu_options_video_tinting_selected = assets->getImage_Png("images/portable_ui/portable_tinting_hover.png");
     game_ui_menu_options_video_return = assets->getImage_Png("images/portable_ui/portable_return.png");
 
@@ -423,7 +423,7 @@ GUIWindow_GameVideoOptions::GUIWindow_GameVideoOptions()
     // if ( render->pRenderD3D )
     {
         CreateButton({0x13u, 0x118u}, {0xD6u, 0x12u}, BUTTON_TYPE_NORMAL, 0, UIMSG_ToggleBloodsplats, 0);
-        CreateButton({0x13u, 0x12Eu}, {0xD6u, 0x12u}, BUTTON_TYPE_NORMAL, 0, UIMSG_ToggleColoredLights, 0);
+        CreateButton({0x13u, 0x12Eu}, {0xD6u, 0x12u}, BUTTON_TYPE_NORMAL, 0, UIMSG_ToggleReadableFont, 0);
         CreateButton({0x13u, 0x144u}, {0xD6u, 0x12u}, BUTTON_TYPE_NORMAL, 0, UIMSG_ToggleTint, 0);
     }
 
@@ -444,7 +444,7 @@ void GUIWindow_GameVideoOptions::Update() {
 
     render->DrawQuad2D(game_ui_menu_options_video_background, {8, 8});  // draw base texture
     render->DrawQuad2D(game_ui_menu_options_video_bloodsplats, {20, 281});
-    render->DrawQuad2D(game_ui_menu_options_video_coloredlights, {20, 303});
+    render->DrawQuad2D(game_ui_menu_options_video_readablefont, {20, 303});
     render->DrawQuad2D(game_ui_menu_options_video_tinting, {20, 325});
     render->DrawQuad2D(game_ui_menu_options_video_return, {241, 302});
     // if ( !render->bWindowMode && render->IsGammaSupported() )
@@ -463,8 +463,8 @@ void GUIWindow_GameVideoOptions::Update() {
 
     if (engine->config->graphics.BloodSplats.value())
         render->DrawQuad2D(game_ui_menu_options_video_bloodsplats_selected, {20, 281});
-    if (engine->config->graphics.ColoredLights.value())
-        render->DrawQuad2D(game_ui_menu_options_video_coloredlights_selected, {20, 303});
+    if (engine->config->graphics.ReadableFont.value())
+        render->DrawQuad2D(game_ui_menu_options_video_readablefont_selected, {20, 303});
     if (engine->config->graphics.Tinting.value())
         render->DrawQuad2D(game_ui_menu_options_video_tinting_selected, {20, 325});
 }

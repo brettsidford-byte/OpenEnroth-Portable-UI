@@ -1035,6 +1035,7 @@ void MainMenuUI_LoadFontsAndSomeStuff() {
     // for (unsigned i = 0; i < 480; ++i) {  // must be 480 - needs sorting
     //     pSRZBufferLineOffsets[i] = 640 * i;  // must be 640 - needs sorting
     // }
+    GUIFont::setReadableFontEnabled(engine->config->graphics.ReadableFont.value());
     if (!assets->pFontArrus)
         assets->pFontArrus = GUIFont::LoadFont("arrus.fnt");
     if (!assets->pFontLucida)

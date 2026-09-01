@@ -16,7 +16,7 @@
 
 AssetsManager *assets = new AssetsManager();
 
-static void ReloadFonts() {
+void AssetsManager::reloadFonts() {
     if (assets->pFontBookOnlyShadow)
         assets->pFontBookOnlyShadow->CreateFontTex();
     if (assets->pFontBookLloyds)
@@ -52,7 +52,7 @@ void AssetsManager::releaseAllTextures() {
         spr.second->releaseRenderId();
     }
 
-    ReloadFonts();
+    reloadFonts();
 }
 
 bool AssetsManager::releaseImage(std::string_view name) {

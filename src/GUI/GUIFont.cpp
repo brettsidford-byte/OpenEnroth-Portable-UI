@@ -26,8 +26,14 @@ static Color parseColorTag(const char *tag, const Color &defaultColor) {
 
 GUIFont::GUIFont() = default;
 
+bool GUIFont::_readableFontEnabled = false;
+
 GUIFont::~GUIFont() {
     ReleaseFontTex();
+}
+
+void GUIFont::setReadableFontEnabled(bool enabled) {
+    _readableFontEnabled = enabled;
 }
 
 std::unique_ptr<GUIFont> GUIFont::LoadFont(std::string_view pFontFile) {
@@ -57,6 +63,19 @@ void GUIFont::CreateFontTex() {
             for (int x = 0; x < image.width(); x++)
                 if (uint8_t pixel = image[y][x])
                     pixels[cell.y + y][cell.x + x] = pixel == 1 ? Color(0, 255, 0, 0) : Color(255, 0, 0, 0);
+
+        if (_readableFontEnabled) {
+            // Add a softer pixel to the right of each foreground pixel. This slightly increases stroke weight while
+            // preserving every glyph's original width, spacing, height and line-wrapping metrics.
+            for (int y = 0; y < image.height(); ++y) {
+                for (int x = image.width() - 2; x >= 0; --x) {
+                    const Color &source = pixels[cell.y + y][cell.x + x];
+                    Color &target = pixels[cell.y + y][cell.x + x + 1];
+                    if (source.r && !target.r && !target.g)
+                        target = Color(176, 0, 0, 0);
+                }
+            }
+        }
     }
 
     _texture = GraphicsImage::Create(std::move(pixels));
