@@ -146,7 +146,7 @@ GraphicsImage *game_ui_menu_options_video_coloredlights_selected = nullptr;
 GraphicsImage *game_ui_menu_options_video_tinting_selected = nullptr;
 GraphicsImage *game_ui_menu_options_video_return = nullptr;
 std::array<GraphicsImage *, 10> game_ui_menu_options_video_gamma_positions;
-std::array<GraphicsImage *, 7> game_ui_options_controls;
+std::array<GraphicsImage *, 8> game_ui_options_controls;
 
 GraphicsImage *game_ui_evtnpc = nullptr;  // 50795C
 
@@ -289,6 +289,13 @@ GUIWindow_GameKeyBindings::GUIWindow_GameKeyBindings()
     game_ui_options_controls[4] = assets->getImage_Png("images/portable_ui/portable_next.png");
     game_ui_options_controls[5] = assets->getImage_Png("images/portable_ui/portable_back.png");
     game_ui_options_controls[6] = assets->getImage_Png("images/portable_ui/portable_default.png");
+    game_ui_options_controls[7] = assets->getImage_Png("images/portable_ui/portable_clear.png");
+
+    // This button is first in the hit-test order. Keep it empty until a binding is selected,
+    // then let it cover the four temporarily hidden navigation buttons.
+    _clearBindingButton = CreateButton("KeyBinding_Clear", {19, 302}, {216, 42}, BUTTON_TYPE_NORMAL, 0,
+                                       UIMSG_ResetKeyMapping, 1);
+    _clearBindingButton->rect = {};
 
     CreateButton({241, 302}, {214, 40}, BUTTON_TYPE_NORMAL, 0, UIMSG_Escape, 0);
 
@@ -320,6 +327,15 @@ GUIWindow_GameKeyBindings::GUIWindow_GameKeyBindings()
     curr_key_map = keyboardActionMapping->currentGamepadKeybindings(KEYBINDINGS_ALL);
 }
 
+void RefreshGamepadBindingConflicts() {
+    key_map_conflicted = conflictingInputActions(curr_key_map);
+
+    if (key_map_conflicted.empty())
+        engine->_statusBar->clearAll();
+    else
+        engine->_statusBar->setEvent(LSTR_KEY_CONFLICT);
+}
+
 //----- (004142D3) --------------------------------------------------------
 void GUIWindow_GameKeyBindings::Update() {
     // int v4;  // ecx@7
@@ -330,34 +346,24 @@ void GUIWindow_GameKeyBindings::Update() {
         PlatformKey newKey = keyboardInputHandler->LastPressedKey();
         curr_key_map[action] = newKey;
 
-        engine->_statusBar->clearAll();
-
-        key_map_conflicted.clear();
-
-        bool anyConflicts = false;
-        for (auto x : curr_key_map) {
-        for (auto y : curr_key_map) {
-            if (x.first != y.first && x.second != PlatformKey::KEY_NONE && x.second == y.second && inputActionsShareContext(x.first, y.first)) {
-                    key_map_conflicted.insert(x.first);
-                    key_map_conflicted.insert(y.first);
-                    anyConflicts = true;
-                }
-            }
-        }
-
-        if (anyConflicts)
-            engine->_statusBar->setEvent(LSTR_KEY_CONFLICT);
-        else
-            engine->_statusBar->clearAll();
+        RefreshGamepadBindingConflicts();
 
         keyboardInputHandler->EndTextInput();
         currently_selected_action_for_binding = INPUT_ACTION_INVALID;
     }
+
+    bool isSelectingBinding = currently_selected_action_for_binding != INPUT_ACTION_INVALID;
+    _clearBindingButton->rect = isSelectingBinding ? Recti(19, 302, 217, 43) : Recti();
+
     render->DrawQuad2D(game_ui_options_controls[0], {8, 8});  // draw base texture
-    render->DrawQuad2D(game_ui_options_controls[3], {19, 302});
-    render->DrawQuad2D(game_ui_options_controls[4], {127, 302});
-    render->DrawQuad2D(game_ui_options_controls[5], {19, 324});
-    render->DrawQuad2D(game_ui_options_controls[6], {127, 324});
+    if (isSelectingBinding) {
+        render->DrawQuad2D(game_ui_options_controls[7], {19, 302});
+    } else {
+        render->DrawQuad2D(game_ui_options_controls[3], {19, 302});
+        render->DrawQuad2D(game_ui_options_controls[4], {127, 302});
+        render->DrawQuad2D(game_ui_options_controls[5], {19, 324});
+        render->DrawQuad2D(game_ui_options_controls[6], {127, 324});
+    }
     render->DrawQuad2D(game_ui_options_controls[2], {241, 302});
 
     const InputActionPage &page = inputActionPage(KeyboardPageNum);

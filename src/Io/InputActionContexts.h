@@ -2,8 +2,11 @@
 
 #include <array>
 #include <cstddef>
+#include <unordered_map>
+#include <unordered_set>
 
 #include "InputEnums.h"
+#include "Library/Platform/Interface/PlatformEnums.h"
 
 enum class InputActionContext { None, Global, Gameplay, Character, GameMenu, Dialogue, RestTransition, PartyCreation, Arcomage };
 
@@ -50,4 +53,23 @@ inline InputActionContext inputActionContext(InputAction action) {
 inline bool inputActionsShareContext(InputAction a, InputAction b) {
     InputActionContext context = inputActionContext(a);
     return context != InputActionContext::None && context == inputActionContext(b);
+}
+
+inline std::unordered_set<InputAction> conflictingInputActions(
+    const std::unordered_map<InputAction, PlatformKey> &bindings) {
+    std::unordered_set<InputAction> conflicts;
+
+    for (const auto &[firstAction, firstKey] : bindings) {
+        if (firstKey == PlatformKey::KEY_NONE) continue;
+
+        for (const auto &[secondAction, secondKey] : bindings) {
+            if (firstAction != secondAction && firstKey == secondKey &&
+                inputActionsShareContext(firstAction, secondAction)) {
+                conflicts.insert(firstAction);
+                conflicts.insert(secondAction);
+            }
+        }
+    }
+
+    return conflicts;
 }

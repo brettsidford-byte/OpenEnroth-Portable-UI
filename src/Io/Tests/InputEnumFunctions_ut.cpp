@@ -26,3 +26,19 @@ UNIT_TEST(InputActionContexts, GlobalPageComesFirst) {
     EXPECT_EQ(inputActionContext(INPUT_ACTION_OPEN_CONSOLE), InputActionContext::Global);
     EXPECT_EQ(inputActionContext(INPUT_ACTION_TOGGLE_WINDOW_MODE), InputActionContext::Global);
 }
+
+UNIT_TEST(InputActionContexts, NoneBindingsDoNotConflict) {
+    std::unordered_map<InputAction, PlatformKey> bindings = {
+        {INPUT_ACTION_MOVE_FORWARD, PlatformKey::KEY_NONE},
+        {INPUT_ACTION_MOVE_BACKWARDS, PlatformKey::KEY_NONE},
+        {INPUT_ACTION_JUMP, PlatformKey::KEY_GAMEPAD_A},
+        {INPUT_ACTION_ATTACK, PlatformKey::KEY_GAMEPAD_A},
+    };
+
+    std::unordered_set<InputAction> conflicts = conflictingInputActions(bindings);
+    EXPECT_EQ(conflicts.size(), 2);
+    EXPECT_TRUE(conflicts.contains(INPUT_ACTION_JUMP));
+    EXPECT_TRUE(conflicts.contains(INPUT_ACTION_ATTACK));
+    EXPECT_FALSE(conflicts.contains(INPUT_ACTION_MOVE_FORWARD));
+    EXPECT_FALSE(conflicts.contains(INPUT_ACTION_MOVE_BACKWARDS));
+}

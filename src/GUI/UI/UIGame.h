@@ -33,7 +33,12 @@ class GUIWindow_GameKeyBindings : public GUIWindow {
     virtual ~GUIWindow_GameKeyBindings() {}
 
     void Update() override;
+
+ private:
+    GUIButton *_clearBindingButton = nullptr;
 };
+
+void RefreshGamepadBindingConflicts();
 
 
 
@@ -86,7 +91,7 @@ extern GraphicsImage *game_ui_btn_settings;
 
 extern GraphicsImage *game_ui_dialogue_background;
 
-extern std::array<GraphicsImage *, 7> game_ui_options_controls;
+extern std::array<GraphicsImage *, 8> game_ui_options_controls;
 
 extern GraphicsImage *game_ui_evtnpc;  // 50795C
 

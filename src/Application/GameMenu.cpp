@@ -209,6 +209,17 @@ void Menu::EventLoop() {
             }
 
             case UIMSG_ResetKeyMapping: {
+                if (param == 1) {
+                    if (currently_selected_action_for_binding != INPUT_ACTION_INVALID) {
+                        curr_key_map[currently_selected_action_for_binding] = PlatformKey::KEY_NONE;
+                        keyboardInputHandler->EndTextInput();
+                        currently_selected_action_for_binding = INPUT_ACTION_INVALID;
+                        RefreshGamepadBindingConflicts();
+                        pAudioPlayer->playUISound(SOUND_chimes);
+                    }
+                    continue;
+                }
+
                 curr_key_map = keyboardActionMapping->defaultGamepadKeybindings(KEYBINDINGS_ALL);
                 keyboardActionMapping->applyKeybindings(curr_key_map);
                 key_map_conflicted.clear();
@@ -380,10 +391,10 @@ void Menu::EventLoop() {
                         pAudioPlayer->playUISound(SOUND_error);
                         break; // deny to exit options until all key conflicts are solved
                     } else {
-                        for (int i = 0; i < 5; i++) {
-                            if (game_ui_options_controls[i]) {
-                                game_ui_options_controls[i]->release();
-                                game_ui_options_controls[i] = nullptr;
+                        for (GraphicsImage *&image : game_ui_options_controls) {
+                            if (image) {
+                                image->release();
+                                image = nullptr;
                             }
                         }
 
